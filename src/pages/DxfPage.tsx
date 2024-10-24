@@ -61,7 +61,9 @@ export const DxfPage = () => {
             </div>
           </div>
         ) : (
-          <p>Loading...</p>
+          <div className="d-flex z-1 justify-content-center">
+            <div className="spinner-border" role="status"></div>
+          </div>
         )}
       </div>
     </>

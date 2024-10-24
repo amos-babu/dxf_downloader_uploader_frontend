@@ -25,19 +25,25 @@ export const Home = () => {
   }, []);
   return (
     <div className="row">
-      {files.map((file: File) => (
-        <div key={file.id} className="col-md-3 mb-4">
-          <Link
-            to={`/show/${file.id}`}
-            className="card align-items-start text-decoration-none"
-          >
-            <Card.Img variant="top" src={file.picture_path} />
-            <Card.Body>
-              <Card.Title>{file.title}</Card.Title>
-            </Card.Body>
-          </Link>
+      {files ? (
+        files.map((file: File) => (
+          <div key={file.id} className="col-md-3 mb-4">
+            <Link
+              to={`/show/${file.id}`}
+              className="card align-items-start text-decoration-none"
+            >
+              <Card.Img variant="top" src={file.picture_path} />
+              <Card.Body>
+                <Card.Title>{file.title}</Card.Title>
+              </Card.Body>
+            </Link>
+          </div>
+        ))
+      ) : (
+        <div className="d-flex z-1 justify-content-center">
+          <div className="spinner-border" role="status"></div>
         </div>
-      ))}
+      )}
     </div>
   );
 };

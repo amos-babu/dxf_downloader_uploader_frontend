@@ -2,19 +2,28 @@ import axios from "axios";
 import { useState } from "react";
 import { Button, FloatingLabel, Form } from "react-bootstrap";
 
+interface FormDataProps {
+  title: string;
+  description: string;
+  dxf: File | null;
+  dxfImage: File | null;
+}
+
+interface ErrorProps {
+  title?: string[];
+  dxf_path?: string[];
+  picture_path?: string[];
+}
+
 export const Create = () => {
-  const [formData, setFormData] = useState<{
-    title: string;
-    description: string;
-    dxf: File | null;
-    dxfImage: File | null;
-  }>({
+  const [formData, setFormData] = useState<FormDataProps>({
     title: "",
     description: "",
     dxf: null,
     dxfImage: null,
   });
   const [success, setSuccess] = useState<boolean>(false);
+  const [error, setError] = useState<ErrorProps>({});
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const data = new FormData();
@@ -43,10 +52,16 @@ export const Create = () => {
 
         setTimeout(() => {
           setSuccess(false);
-        }, 5000);
+        }, 3000);
       })
       .catch((error) => {
-        console.error("Error uploading file", error);
+        if (error.status === 422) {
+          // console.log(error);
+          setError(error.response.data.errors);
+        } else {
+          console.error("Error uploading file", error);
+          console.log(error.status);
+        }
       });
   };
   return (
@@ -60,7 +75,7 @@ export const Create = () => {
       )}
       <div className="col-md-8">
         <span className="fw-bold fs-4">Create New Dxf</span>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} noValidate>
           <FloatingLabel
             controlId="floatingInput"
             label="Title"
@@ -73,7 +88,13 @@ export const Create = () => {
                 setFormData({ ...formData, title: e.target.value })
               }
               placeholder="Flowers"
+              className={`${error.title ? "is-invalid" : ""}`}
             />
+            {error && error.title && (
+              <Form.Control.Feedback type="invalid">
+                {error.title[0]}
+              </Form.Control.Feedback>
+            )}
           </FloatingLabel>
           <FloatingLabel controlId="floatingTextarea2" label="Description">
             <Form.Control
@@ -90,6 +111,7 @@ export const Create = () => {
           <Form.Group controlId="formFile" className="mb-3">
             <Form.Label className="fw-semibold">Choose a dxf file</Form.Label>
             <Form.Control
+              className={`${error.dxf_path ? "is-invalid" : ""}`}
               accept=".dxf"
               type="file"
               onChange={(e) =>
@@ -99,6 +121,11 @@ export const Create = () => {
                 })
               }
             />
+            {error && error.dxf_path && (
+              <Form.Control.Feedback type="invalid">
+                {error.dxf_path[0]}
+              </Form.Control.Feedback>
+            )}
           </Form.Group>
 
           <Form.Group controlId="formFile" className="mb-3">
@@ -106,6 +133,7 @@ export const Create = () => {
               Choose a picture of the selected dxf file
             </Form.Label>
             <Form.Control
+              className={`${error.picture_path ? "is-invalid" : ""}`}
               accept="image/*"
               type="file"
               onChange={(e) =>
@@ -115,6 +143,11 @@ export const Create = () => {
                 })
               }
             />
+            {error && error.picture_path && (
+              <Form.Control.Feedback type="invalid">
+                {error.picture_path[0]}
+              </Form.Control.Feedback>
+            )}
           </Form.Group>
 
           <Button type="submit">Save File</Button>

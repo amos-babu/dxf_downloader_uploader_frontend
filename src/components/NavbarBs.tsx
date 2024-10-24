@@ -8,13 +8,13 @@ const NavbarBs = () => {
     <Navbar sticky="top" className="bg-white shadow-sm mb-3">
       <Container>
         <Nav className="me-auto">
-          <Nav.Link to="/" as={NavLink}>
+          <Nav.Link className="fw-semibold" to="/" as={NavLink}>
             Home
           </Nav.Link>
-          <Nav.Link to="/create" as={NavLink}>
+          <Nav.Link className="fw-semibold" to="/create" as={NavLink}>
             Create
           </Nav.Link>
-          <Nav.Link to="/about" as={NavLink}>
+          <Nav.Link className="fw-semibold" to="/about" as={NavLink}>
             About
           </Nav.Link>
         </Nav>
