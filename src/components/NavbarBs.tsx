@@ -1,7 +1,8 @@
 import { Container, Nav, Navbar } from "react-bootstrap";
-import { FaBell, FaSearch } from "react-icons/fa";
-import { RiLoginBoxFill } from "react-icons/ri";
-import { NavLink } from "react-router-dom";
+import { FaBell } from "react-icons/fa";
+import { Link, NavLink } from "react-router-dom";
+import SearchFile from "./SearchFile";
+import { MdLogin } from "react-icons/md";
 
 const NavbarBs = () => {
   return (
@@ -14,24 +15,12 @@ const NavbarBs = () => {
           <Nav.Link className="fw-semibold" to="/create" as={NavLink}>
             Create
           </Nav.Link>
-          <Nav.Link className="fw-semibold" to="/about" as={NavLink}>
-            About
-          </Nav.Link>
         </Nav>
-        <div className="input-group rounded">
-          <input
-            type="search"
-            className="form-control rounded"
-            placeholder="Search"
-            aria-label="Search"
-            aria-describedby="search-addon"
-          />
-          <span className="input-group-text border-0" id="search-addon">
-            <FaSearch />
-          </span>
-        </div>
+        <SearchFile />
         <FaBell className="mx-3" size={24} />
-        <RiLoginBoxFill size={24} />
+        <Link className="text-decoration-none" to="/login">
+          <MdLogin size={24} />
+        </Link>
       </Container>
     </Navbar>
   );

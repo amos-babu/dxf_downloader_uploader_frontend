@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Button, Image } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { IoMdArrowRoundBack } from "react-icons/io";
+import { useNavigate, useParams } from "react-router-dom";
 
 interface FileProps {
   created_at: string;
@@ -14,6 +15,7 @@ interface FileProps {
 export const DxfPage = () => {
   const [file, setFile] = useState<FileProps | null>(null);
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const fetchFile = async () => {
     if (id) {
@@ -37,14 +39,28 @@ export const DxfPage = () => {
       <div className="card mb-3 shadow">
         {file ? (
           <div className="row g-0">
-            <div className="col-md-4">
+            <div className="col-md-6 position-relative">
               <Image
                 src={file.picture_path}
                 className="img-fluid rounded-start"
                 alt="..."
               />
+              <button
+                onClick={() => navigate(-1)}
+                type="button"
+                style={{
+                  width: "41.2px",
+                  height: "41.2px",
+                  top: "10px",
+                  left: "10px",
+                }}
+                className="btn btn-primary rounded-circle text-bg-dark position-absolute btn-floating"
+                data-mdb-ripple-init
+              >
+                <IoMdArrowRoundBack className="mb-1" />
+              </button>
             </div>
-            <div className="col-md-8">
+            <div className="col-md-6">
               <div className="card-body">
                 <h5 className="card-title">{file.title}</h5>
                 <p className="card-text">{file.description}</p>
