@@ -15,6 +15,9 @@ interface ErrorProps {
   picture_path?: string[];
 }
 
+interface AuthError {
+  message?: string;
+}
 export const Create = () => {
   const [formData, setFormData] = useState<FormDataProps>({
     title: "",
@@ -24,6 +27,8 @@ export const Create = () => {
   });
   const [success, setSuccess] = useState<boolean>(false);
   const [error, setError] = useState<ErrorProps>({});
+  const [authError, setAuthError] = useState<AuthError>({});
+  const [authErrorDisplay, setAuthErrorDisplay] = useState<boolean>(false);
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const data = new FormData();
@@ -49,18 +54,18 @@ export const Create = () => {
         console.log("File Uploaded Successfully", response.data);
         setFormData({ title: "", description: "", dxf: null, dxfImage: null });
         setSuccess(true);
-
-        setTimeout(() => {
-          setSuccess(false);
-        }, 3000);
       })
       .catch((error) => {
         if (error.status === 422) {
           // console.log(error);
           setError(error.response.data.errors);
         } else {
-          console.error("Error uploading file", error);
-          console.log(error.status);
+          setAuthErrorDisplay(true);
+
+          setTimeout(() => {
+            setAuthErrorDisplay(false);
+          }, 3000);
+          setAuthError(error.response.data);
         }
       });
   };
@@ -73,8 +78,16 @@ export const Create = () => {
           </div>
         </div>
       )}
+
       <div className="col-md-8">
         <span className="fw-bold fs-4">Create New Dxf</span>
+        {authErrorDisplay && (
+          <div className="justify-content-center">
+            <div className="alert alert-danger" role="alert">
+              {authError.message}
+            </div>
+          </div>
+        )}
         <form onSubmit={handleSubmit} noValidate>
           <FloatingLabel
             controlId="floatingInput"

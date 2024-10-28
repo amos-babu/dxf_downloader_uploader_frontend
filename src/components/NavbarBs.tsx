@@ -2,7 +2,6 @@ import { Container, Nav, Navbar } from "react-bootstrap";
 import { FaBell } from "react-icons/fa";
 import { Link, NavLink } from "react-router-dom";
 import SearchFile from "./SearchFile";
-import { MdLogin } from "react-icons/md";
 
 const NavbarBs = () => {
   return (
@@ -19,7 +18,7 @@ const NavbarBs = () => {
         <SearchFile />
         <FaBell className="mx-3" size={24} />
         <Link className="text-decoration-none" to="/login">
-          <MdLogin size={24} />
+          <div className="btn btn-sm btn-secondary">Login</div>
         </Link>
       </Container>
     </Navbar>

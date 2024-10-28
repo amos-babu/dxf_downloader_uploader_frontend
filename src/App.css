@@ -1,13 +1,2 @@
-.card {
-    display: block;
-    margin-bottom: 1rem; /* Adjust margin as needed */
-  }
-  
-  .row {
-    display: block; /* Prevent Bootstrap flexbox row behavior */
-  }
-  
-  .col-md-3 {
-    display: block; /* Allow different heights */
-  }
+
   
