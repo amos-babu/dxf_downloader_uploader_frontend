@@ -76,7 +76,7 @@ export const DxfPage = () => {
                   top: "10px",
                   left: "10px",
                 }}
-                className="btn btn-dark rounded-circle position-absolute btn-floating"
+                className="btn btn-primary rounded-circle position-absolute btn-floating"
                 data-mdb-ripple-init
               >
                 <IoMdArrowRoundBack className="mb-1" />

@@ -30,7 +30,7 @@ export const Home = () => {
           <div key={file.id} className="col-md-3 mb-4">
             <Link
               to={`/show/${file.id}`}
-              className="card align-items-start text-decoration-none"
+              className="card shadow-sm align-items-start text-decoration-none"
             >
               <Card.Img variant="top" src={file.picture_path} />
               <Card.Body>

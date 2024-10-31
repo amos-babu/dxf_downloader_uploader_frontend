@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { Card } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../utils/AuthContext";
 
 interface FormDataProps {
   email: string;
@@ -19,6 +20,7 @@ const Login = () => {
   });
   const [error, setError] = useState<ErrorProps>({});
   const [success, setSuccess] = useState<boolean>(false);
+  const { login } = useAuth();
 
   const navigate = useNavigate();
   const submitLoginForm = (e: React.FormEvent) => {
@@ -27,7 +29,8 @@ const Login = () => {
       .post("http://127.0.0.1:8000/api/login", formData)
       .then((res) => {
         const token = res.data.token;
-        localStorage.setItem("token", token);
+        login(token);
+
         setSuccess(true);
 
         setTimeout(() => {
@@ -78,7 +81,7 @@ const Login = () => {
               </div>
               <div className="form-floating mb-3">
                 <input
-                  type="text"
+                  type="password"
                   name="password"
                   value={formData.password}
                   onChange={(e) =>

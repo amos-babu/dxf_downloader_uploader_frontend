@@ -126,7 +126,7 @@ const Register = () => {
               </div>
               <div className="form-floating mb-3">
                 <input
-                  type="text"
+                  type="password"
                   name="password"
                   value={formData.password}
                   onChange={(e) =>
@@ -146,7 +146,7 @@ const Register = () => {
               </div>
               <div className="form-floating mb-3">
                 <input
-                  type="text"
+                  type="password"
                   name="password_confirmation"
                   value={formData.password_confirmation}
                   onChange={(e) =>
