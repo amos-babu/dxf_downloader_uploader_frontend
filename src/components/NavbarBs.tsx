@@ -5,12 +5,27 @@ import SearchFile from "./SearchFile";
 import axios from "axios";
 import { useAuth } from "../utils/AuthContext";
 
-const NavbarBs = () => {
+interface NavProps {
+  logoutNotification: (message: string) => void;
+}
+
+const NavbarBs = ({ logoutNotification }: NavProps) => {
   const { logout, loggedIn } = useAuth();
+  const token = localStorage.getItem("token");
   const handleLogout = () => {
     axios
-      .post(`http://127.0.0.1:8000/api/logout`)
+      .post(
+        `http://127.0.0.1:8000/api/logout`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((res) => {
+        // console.log(res);
+        logoutNotification(res.data.message);
         logout();
       })
       .catch((err) => {

@@ -17,7 +17,7 @@ export const Home = () => {
     const response = await axios.get(
       "http://127.0.0.1:8000/api/retrieve_files"
     );
-    setFiles(response.data.file);
+    setFiles(response.data.data);
   };
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export const Home = () => {
           <div key={file.id} className="col-md-3 mb-4">
             <Link
               to={`/show/${file.id}`}
-              className="card shadow-sm align-items-start text-decoration-none"
+              className="card shadow align-items-start text-decoration-none"
             >
               <Card.Img variant="top" src={file.picture_path} />
               <Card.Body>

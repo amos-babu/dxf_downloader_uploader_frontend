@@ -76,7 +76,7 @@ export const Create = () => {
       )}
 
       <div className="col-md-8">
-        <div className="card">
+        <div className="card shadow-lg">
           <div className="card-body">
             <h5 className="card-title">Create New Dxf</h5>
             {authErrorDisplay && (

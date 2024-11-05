@@ -23,8 +23,8 @@ export const DxfPage = () => {
         const response = await axios.get(
           `http://127.0.0.1:8000/api/file_display/${id}`
         );
-        // console.log(response.data.file);
-        setFile(response.data.file);
+        // console.log(response.data.data);
+        setFile(response.data.data);
       } catch (error) {
         console.error("Error fetching file:", error);
       }
@@ -58,6 +58,20 @@ export const DxfPage = () => {
   }, [id]);
   return (
     <>
+      <button
+        onClick={() => navigate(-1)}
+        type="button"
+        style={{
+          width: "41.2px",
+          height: "41.2px",
+          top: "100px",
+          left: "10px",
+        }}
+        className="btn btn-primary rounded-circle z-1 top-20 position-fixed btn-floating"
+        data-mdb-ripple-init
+      >
+        <IoMdArrowRoundBack className="mb-1" />
+      </button>
       {file ? (
         <div className="card mb-3 shadow">
           <div className="row g-0">
@@ -67,20 +81,6 @@ export const DxfPage = () => {
                 className="img-fluid rounded-start"
                 alt="..."
               />
-              <button
-                onClick={() => navigate(-1)}
-                type="button"
-                style={{
-                  width: "41.2px",
-                  height: "41.2px",
-                  top: "10px",
-                  left: "10px",
-                }}
-                className="btn btn-primary rounded-circle position-absolute btn-floating"
-                data-mdb-ripple-init
-              >
-                <IoMdArrowRoundBack className="mb-1" />
-              </button>
             </div>
             <div className="col-md-6">
               <div className="card-body">

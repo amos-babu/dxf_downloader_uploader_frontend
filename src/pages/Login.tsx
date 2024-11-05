@@ -13,13 +13,16 @@ interface ErrorProps {
   email?: string[];
   password?: string[];
 }
-const Login = () => {
+
+interface LoginProps {
+  logoutNotification: (message: string) => void;
+}
+const Login = ({ logoutNotification }: LoginProps) => {
   const [formData, setFormData] = useState<FormDataProps>({
     email: "",
     password: "",
   });
   const [error, setError] = useState<ErrorProps>({});
-  const [success, setSuccess] = useState<boolean>(false);
   const { login } = useAuth();
 
   const navigate = useNavigate();
@@ -29,13 +32,10 @@ const Login = () => {
       .post("http://127.0.0.1:8000/api/login", formData)
       .then((res) => {
         const token = res.data.token;
+        // console.log(res.data);
         login(token);
 
-        setSuccess(true);
-
-        setTimeout(() => {
-          setSuccess(false);
-        }, 3000);
+        logoutNotification("Login Successfull!");
         navigate("/");
       })
       .catch((err) => {
@@ -47,13 +47,6 @@ const Login = () => {
   };
   return (
     <div className="row justify-content-center">
-      {success && (
-        <div className="d-flex position-fixed justify-content-end">
-          <div className="alert alert-success position-absolute" role="alert">
-            Login Successfully!
-          </div>
-        </div>
-      )}
       <div className="col-md-6">
         <Card className="shadow mt-1">
           <Card.Body>
