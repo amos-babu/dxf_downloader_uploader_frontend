@@ -1,6 +1,6 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Route, Router, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { useState } from "react";
 import NavbarBs from "./components/NavbarBs";
 import { Create } from "./pages/Create";
@@ -11,6 +11,7 @@ import Login from "./pages/Login";
 import PrivateRoutes from "./utils/PrivateRoute";
 import { AuthProvider } from "./utils/AuthContext";
 import NotFound from "./pages/NotFound";
+import Masonry from "./pages/Masonry";
 
 function App() {
   const [notification, setNotification] = useState<string | null>(null);
@@ -41,6 +42,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="*" element={<NotFound />} />
+            <Route path="/masonry" element={<Masonry />} />
             <Route path="/show/:id" element={<DxfPage />} />
             <Route
               path="/login"

@@ -1,9 +1,10 @@
-import { Container, Nav, Navbar } from "react-bootstrap";
+import { Container, Dropdown, Nav, Navbar } from "react-bootstrap";
 import { FaBell } from "react-icons/fa";
 import { Link, NavLink } from "react-router-dom";
 import SearchFile from "./SearchFile";
 import axios from "axios";
 import { useAuth } from "../utils/AuthContext";
+import { IoPersonCircle } from "react-icons/io5";
 
 interface NavProps {
   logoutNotification: (message: string) => void;
@@ -33,7 +34,7 @@ const NavbarBs = ({ logoutNotification }: NavProps) => {
       });
   };
   return (
-    <Navbar sticky="top" className="bg-white shadow-sm mb-3">
+    <Navbar sticky="top" className="bg-white mb-3">
       <Container>
         <Nav className="me-auto">
           <Nav.Link className="fw-semibold" to="/" as={NavLink}>
@@ -46,16 +47,51 @@ const NavbarBs = ({ logoutNotification }: NavProps) => {
         <SearchFile />
         <FaBell className="mx-3" size={24} />
         {loggedIn ? (
-          <div className="text-decoration-none mx-1" onClick={handleLogout}>
-            <div className="btn btn-sm btn-outline-danger">Logout</div>
-          </div>
+          <>
+            <Dropdown>
+              <Dropdown.Toggle as="span" id="dropdown-custom-components">
+                {/* <IoPersonCircle
+                  className="rounded-circle"
+                  style={{ cursor: "pointer" }}
+                  size={40}
+                /> */}
+                <img
+                  src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+                  className="rounded-circle"
+                  style={{ width: "40px", cursor: "pointer" }}
+                  alt="Avatar"
+                />
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu
+                className="shadow"
+                style={{ right: 0, left: "auto" }}
+              >
+                <Dropdown.Item href="#/action-1">Profile</Dropdown.Item>
+                <Dropdown.Item href="#/action-2">Settings</Dropdown.Item>
+                <Dropdown.Item className="text-danger" onClick={handleLogout}>
+                  Logout
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </>
         ) : (
           <>
             <Link className="text-decoration-none mx-1" to="/login">
-              <div className="btn btn-sm btn-outline-primary">Login</div>
+              <div
+                style={{ width: "5rem" }}
+                className="btn btn-sm btn-outline-primary"
+              >
+                Login
+              </div>
             </Link>
             <Link className="text-decoration-none mx-1" to="/register">
-              <div className="btn btn-sm btn-outline-primary">Register</div>
+              <div
+                style={{ width: "5rem" }}
+                className="btn btn-sm btn-outline-primary"
+              >
+                Register
+              </div>
             </Link>
           </>
         )}
