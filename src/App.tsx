@@ -44,7 +44,6 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="*" element={<NotFound />} />
             <Route path="/masonry" element={<Masonry />} />
-            <Route path="/profile" element={<Profile />} />
             <Route path="/show/:id" element={<DxfPage />} />
             <Route
               path="/login"
@@ -56,6 +55,7 @@ function App() {
             />
             <Route element={<PrivateRoutes />}>
               <Route path="/create" element={<Create />} />
+              <Route path="/profile" element={<Profile />} />
             </Route>
           </Routes>
         </div>
