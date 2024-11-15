@@ -67,7 +67,7 @@ export const DxfPage = () => {
           top: "100px",
           left: "10px",
         }}
-        className="btn btn-primary rounded-circle z-1 top-20 position-fixed btn-floating"
+        className="btn btn-dark rounded-circle z-1 top-20 position-fixed btn-floating"
         data-mdb-ripple-init
       >
         <IoMdArrowRoundBack className="mb-1" />
@@ -87,10 +87,14 @@ export const DxfPage = () => {
                 <h5 className="card-title">{file.title}</h5>
                 <p className="card-text">{file.description}</p>
                 <div className="d-flex justify-content-between">
-                  <Button onClick={handleDownloadImage}>
+                  <Button variant="dark" onClick={handleDownloadImage}>
                     Download Image file
                   </Button>
-                  <Button onClick={handleDownloadDxf} className="mx-3">
+                  <Button
+                    variant="dark"
+                    onClick={handleDownloadDxf}
+                    className="mx-3"
+                  >
                     Download DXF file
                   </Button>
                 </div>

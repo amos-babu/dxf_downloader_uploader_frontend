@@ -158,14 +158,17 @@ const Register = ({ logoutNotification }: RegisterProps) => {
                 <h6>
                   Have an account ?
                   <span className="ms-2">
-                    <Link className="text-decoration-none" to={`/login`}>
+                    <Link
+                      className="text-decoration-none text-dark"
+                      to={`/login`}
+                    >
                       Sign In
                     </Link>
                   </span>
                 </h6>
               </div>
               <br />
-              <button type="submit" className="btn btn-outline-primary">
+              <button type="submit" className="btn btn-outline-dark">
                 Register
               </button>
             </form>

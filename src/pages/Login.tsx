@@ -42,7 +42,11 @@ const Login = ({ logoutNotification }: LoginProps) => {
         if (err.response && err.response.status === 422) {
           setError(err.response.data.errors);
         }
-        console.log(err);
+        // console.log(err.response.data.message);
+        // message = {
+        //   message: "Pasword does not match email",
+        // };
+        // setError(message);
       });
   };
   return (
@@ -96,14 +100,17 @@ const Login = ({ logoutNotification }: LoginProps) => {
                 <h6>
                   Don't have an account?
                   <span className="ms-2">
-                    <Link className="text-decoration-none" to={`/register`}>
+                    <Link
+                      className="text-decoration-none text-dark"
+                      to={`/register`}
+                    >
                       Register
                     </Link>
                   </span>
                 </h6>
               </div>
               <br />
-              <button type="submit" className="btn btn-outline-primary">
+              <button type="submit" className="btn btn-outline-dark">
                 Login
               </button>
             </form>

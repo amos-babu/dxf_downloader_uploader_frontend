@@ -12,6 +12,7 @@ import PrivateRoutes from "./utils/PrivateRoute";
 import { AuthProvider } from "./utils/AuthContext";
 import NotFound from "./pages/NotFound";
 import Masonry from "./pages/Masonry";
+import { Profile } from "./pages/Profile";
 
 function App() {
   const [notification, setNotification] = useState<string | null>(null);
@@ -33,7 +34,7 @@ function App() {
                 style={{ left: "10px" }}
                 className="d-flex z-1 position-fixed justify-content-end right-10"
               >
-                <div className="alert alert-success shadow-lg" role="alert">
+                <div className="alert alert-success" role="alert">
                   {notification}
                 </div>
               </div>
@@ -43,6 +44,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="*" element={<NotFound />} />
             <Route path="/masonry" element={<Masonry />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/show/:id" element={<DxfPage />} />
             <Route
               path="/login"

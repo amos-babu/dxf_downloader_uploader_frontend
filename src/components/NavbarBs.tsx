@@ -67,7 +67,13 @@ const NavbarBs = ({ logoutNotification }: NavProps) => {
                 className="shadow"
                 style={{ right: 0, left: "auto" }}
               >
-                <Dropdown.Item href="#/action-1">Profile</Dropdown.Item>
+                <Dropdown.Item
+                  as={Link}
+                  className="text-decoration-none"
+                  to="/profile"
+                >
+                  Profile
+                </Dropdown.Item>
                 <Dropdown.Item href="#/action-2">Settings</Dropdown.Item>
                 <Dropdown.Item className="text-danger" onClick={handleLogout}>
                   Logout
@@ -78,20 +84,15 @@ const NavbarBs = ({ logoutNotification }: NavProps) => {
         ) : (
           <>
             <Link className="text-decoration-none mx-1" to="/login">
-              <div
-                style={{ width: "5rem" }}
-                className="btn btn-sm btn-outline-primary"
-              >
+              <div style={{ width: "5rem" }} className="btn btn-sm btn-dark">
                 Login
               </div>
             </Link>
-            <Link className="text-decoration-none mx-1" to="/register">
-              <div
-                style={{ width: "5rem" }}
-                className="btn btn-sm btn-outline-primary"
-              >
-                Register
-              </div>
+            <Link
+              className="text-decoration-none mx-1 text-dark"
+              to="/register"
+            >
+              <div style={{ width: "5rem" }}>Register</div>
             </Link>
           </>
         )}
