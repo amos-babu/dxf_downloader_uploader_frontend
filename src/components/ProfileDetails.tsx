@@ -1,4 +1,8 @@
+import { IoPersonCircle } from "react-icons/io5";
+import { useAuth } from "../utils/AuthContext";
+
 export default function ProfileDetails() {
+  const { profileData } = useAuth();
   return (
     <>
       <div
@@ -15,6 +19,15 @@ export default function ProfileDetails() {
             className="img-fluid img-thumbnail mt-4 mb-2"
             style={{ width: "150px", zIndex: "1" }}
           />
+          <IoPersonCircle
+            className="img-fluid mt-4 mb-2"
+            style={{
+              cursor: "pointer",
+              width: "150px",
+              zIndex: "1",
+              position: "absolute",
+            }}
+          />
           <button
             type="button"
             data-mdb-button-init
@@ -27,16 +40,14 @@ export default function ProfileDetails() {
           </button>
         </div>
         <div className="ms-3" style={{ marginTop: "130px" }}>
-          <h5>Andy Horwitz</h5>
+          <h5>{profileData?.name}</h5>
           <p>New York</p>
         </div>
       </div>
       <div className="mb-5  text-body" style={{ marginTop: "130px" }}>
         <p className="lead fw-normal mx-3 mb-1">About</p>
         <div className="p-4 bg-body-tertiary">
-          <p className="font-italic mb-1">Web Developer</p>
-          <p className="font-italic mb-1">Lives in New York</p>
-          <p className="font-italic mb-0">Photographer</p>
+          <p className="font-italic mb-1">{profileData?.bio}</p>
         </div>
       </div>
     </>

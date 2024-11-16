@@ -11,7 +11,7 @@ interface NavProps {
 }
 
 const NavbarBs = ({ logoutNotification }: NavProps) => {
-  const { logout, loggedIn } = useAuth();
+  const { logout, loggedIn, profileData } = useAuth();
   const token = localStorage.getItem("token");
   const handleLogout = () => {
     axios
@@ -50,17 +50,20 @@ const NavbarBs = ({ logoutNotification }: NavProps) => {
           <>
             <Dropdown>
               <Dropdown.Toggle as="span" id="dropdown-custom-components">
-                {/* <IoPersonCircle
-                  className="rounded-circle"
-                  style={{ cursor: "pointer" }}
-                  size={40}
-                /> */}
-                <img
-                  src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
-                  className="rounded-circle"
-                  style={{ width: "40px", cursor: "pointer" }}
-                  alt="Avatar"
-                />
+                {profileData?.profile_pic_path ? (
+                  <img
+                    src={profileData?.profile_pic_path}
+                    className="rounded-circle"
+                    style={{ width: "40px", cursor: "pointer" }}
+                    alt="Avatar"
+                  />
+                ) : (
+                  <IoPersonCircle
+                    className="rounded-circle"
+                    style={{ cursor: "pointer" }}
+                    size={40}
+                  />
+                )}
               </Dropdown.Toggle>
 
               <Dropdown.Menu

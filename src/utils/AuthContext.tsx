@@ -1,3 +1,4 @@
+import axios from "axios";
 import {
   ReactNode,
   createContext,
@@ -14,6 +15,14 @@ interface AuthContextTypeProps {
   loggedIn: boolean;
   login: (userToken: string) => void;
   logout: () => void;
+  profileData: ProfileDetailsProps | null;
+}
+interface ProfileDetailsProps {
+  name: string;
+  email: string;
+  username: string;
+  bio: string | null;
+  profile_pic_path: string | null;
 }
 
 const AuthContext = createContext<AuthContextTypeProps | undefined>(undefined);
@@ -21,6 +30,29 @@ const AuthContext = createContext<AuthContextTypeProps | undefined>(undefined);
 export const AuthProvider = ({ children }: AuthContextProviderProps) => {
   const [token, setToken] = useState<string | null>(null);
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  const [profileData, setProfileData] = useState<ProfileDetailsProps | null>(
+    null
+  );
+
+  const authtToken3 = localStorage.getItem("token");
+
+  const fetchProfile = async () => {
+    try {
+      const response = await axios.get("http://127.0.0.1:8000/api/user", {
+        headers: {
+          Authorization: `Bearer ${authtToken3}`,
+        },
+      });
+      console.log(response.data.data);
+      setProfileData(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchProfile();
+  }, []);
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
@@ -44,7 +76,9 @@ export const AuthProvider = ({ children }: AuthContextProviderProps) => {
 
   const isAuthenticated = !!token;
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout, loggedIn }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, login, logout, loggedIn, profileData }}
+    >
       {children}
     </AuthContext.Provider>
   );
