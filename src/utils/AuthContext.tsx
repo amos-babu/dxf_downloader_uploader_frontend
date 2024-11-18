@@ -10,6 +10,7 @@ import {
 interface AuthContextProviderProps {
   children: ReactNode;
 }
+
 interface AuthContextTypeProps {
   isAuthenticated: boolean;
   loggedIn: boolean;
@@ -17,12 +18,18 @@ interface AuthContextTypeProps {
   logout: () => void;
   profileData: ProfileDetailsProps | null;
 }
+
+interface CurrentUserFilesPictureProps {
+  picture_path: string;
+}
+
 interface ProfileDetailsProps {
   name: string;
   email: string;
   username: string;
   bio: string | null;
   profile_pic_path: string | null;
+  files: CurrentUserFilesPictureProps[];
 }
 
 const AuthContext = createContext<AuthContextTypeProps | undefined>(undefined);
@@ -43,7 +50,7 @@ export const AuthProvider = ({ children }: AuthContextProviderProps) => {
           Authorization: `Bearer ${authtToken3}`,
         },
       });
-      console.log(response.data.data);
+      console.log(response);
       setProfileData(response.data.data);
     } catch (error) {
       console.error(error);
