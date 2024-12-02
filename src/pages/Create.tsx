@@ -101,7 +101,7 @@ export const Create = () => {
                     setFormData({ ...formData, title: e.target.value })
                   }
                   placeholder="Flowers"
-                  className={`${error.title ? "is-invalid" : ""}`}
+                  className={`${error.title ? "is-invalid" : ""} bg-light`}
                 />
                 {error && error.title && (
                   <Form.Control.Feedback type="invalid">
@@ -111,7 +111,7 @@ export const Create = () => {
               </FloatingLabel>
               <FloatingLabel controlId="floatingTextarea2" label="Description">
                 <Form.Control
-                  className="mb-3"
+                  className="mb-3 bg-light"
                   as="textarea"
                   value={formData.description}
                   onChange={(e) =>
@@ -126,7 +126,7 @@ export const Create = () => {
                   Choose a dxf file
                 </Form.Label>
                 <Form.Control
-                  className={`${error.dxf_path ? "is-invalid" : ""}`}
+                  className={`${error.dxf_path ? "is-invalid" : ""} bg-light`}
                   accept=".dxf"
                   type="file"
                   onChange={(e) =>
@@ -148,7 +148,9 @@ export const Create = () => {
                   Choose a picture of the selected dxf file
                 </Form.Label>
                 <Form.Control
-                  className={`${error.picture_path ? "is-invalid" : ""}`}
+                  className={`${
+                    error.picture_path ? "is-invalid" : ""
+                  } bg-light`}
                   accept="image/*"
                   type="file"
                   onChange={(e) =>
@@ -165,7 +167,9 @@ export const Create = () => {
                 )}
               </Form.Group>
 
-              <Button type="submit">Save File</Button>
+              <Button className="btn btn-dark" type="submit">
+                Save File
+              </Button>
             </form>
           </div>
         </div>

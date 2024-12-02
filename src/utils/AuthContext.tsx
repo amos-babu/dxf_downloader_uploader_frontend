@@ -6,6 +6,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import { useParams } from "react-router-dom";
 
 interface AuthContextProviderProps {
   children: ReactNode;
@@ -40,26 +41,46 @@ export const AuthProvider = ({ children }: AuthContextProviderProps) => {
   const [profileData, setProfileData] = useState<ProfileDetailsProps | null>(
     null
   );
-
+  const [userData, setUserData] = useState<ProfileDetailsProps | null>(null);
+  const { id } = useParams<{ id: string }>();
   const authtToken3 = localStorage.getItem("token");
 
-  const fetchProfile = async () => {
-    try {
-      const response = await axios.get("http://127.0.0.1:8000/api/user", {
-        headers: {
-          Authorization: `Bearer ${authtToken3}`,
-        },
-      });
-      console.log(response);
-      setProfileData(response.data.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/api/user", {
+          headers: {
+            Authorization: `Bearer ${authtToken3}`,
+          },
+        });
+        // console.log(response);
+        setProfileData(response.data.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     fetchProfile();
   }, []);
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      if (id) {
+        try {
+          const response = await axios.get(
+            `http://127.0.0.1:8000/api/user_details/${id}`
+          );
+          console.log(response, id);
+  
+          setUserData(response.data.data);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    };
+  
+    fetchUserProfile();
+  }, [id]);
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");

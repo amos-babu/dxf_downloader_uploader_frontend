@@ -25,7 +25,7 @@ export const Home = () => {
     const response = await axios.get(
       "http://127.0.0.1:8000/api/retrieve_files"
     );
-    console.log(response);
+    console.log(response.data.data);
     setFiles(response.data.data);
   };
 
@@ -45,7 +45,10 @@ export const Home = () => {
                 <Card.Img variant="top" src={file.picture_path} />
                 <Card.Body>
                   <Card.Title>{file.title}</Card.Title>
-                  <Link to="/profile" className="text-decoration-none">
+                  <Link
+                    to={`/profile/${file?.user.id}`}
+                    className="text-decoration-none"
+                  >
                     <div className="d-flex mt-3">
                       {file?.user.profile_pic_path ? (
                         <img

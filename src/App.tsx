@@ -45,6 +45,7 @@ function App() {
             <Route path="*" element={<NotFound />} />
             <Route path="/masonry" element={<Masonry />} />
             <Route path="/show/:id" element={<DxfPage />} />
+            <Route path="/profile/:id" element={<Profile />} />
             <Route
               path="/login"
               element={<Login logoutNotification={logoutNotification} />}
