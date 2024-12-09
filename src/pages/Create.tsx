@@ -2,22 +2,23 @@ import axios from "axios";
 import { useState } from "react";
 import { Button, FloatingLabel, Form } from "react-bootstrap";
 
-interface FormDataProps {
+type FormDataProps = {
   title: string;
   description: string;
   dxf: File | null;
   dxfImage: File | null;
-}
+};
 
-interface ErrorProps {
+type ErrorProps = {
   title?: string[];
   dxf_path?: string[];
   picture_path?: string[];
-}
+};
 
-interface AuthError {
+type AuthError = {
   message?: string;
-}
+};
+
 export const Create = () => {
   const [formData, setFormData] = useState<FormDataProps>({
     title: "",

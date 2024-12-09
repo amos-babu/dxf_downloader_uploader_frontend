@@ -4,20 +4,21 @@ import { Card } from "react-bootstrap";
 import { IoPersonCircle } from "react-icons/io5";
 import { Link } from "react-router-dom";
 
-interface UserProps {
+type UserProps = {
   id: number;
   username: string;
   profile_pic_path: string;
-}
+};
 
-interface File {
+type File = {
   id: number;
   title: string;
   picture_path: string;
   dxf_path: string;
   description: string;
   user: UserProps;
-}
+};
+
 export const Home = () => {
   const [files, setFiles] = useState<File[]>([]);
 
@@ -25,7 +26,7 @@ export const Home = () => {
     const response = await axios.get(
       "http://127.0.0.1:8000/api/retrieve_files"
     );
-    console.log(response.data.data);
+    // console.log(response.data.data);
     setFiles(response.data.data);
   };
 

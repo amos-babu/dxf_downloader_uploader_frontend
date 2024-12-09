@@ -3,24 +3,24 @@ import { useState } from "react";
 import { Card } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 
-interface FormDataProps {
+type FormDataProps = {
   name: string;
   email: string;
   username: string;
   password: string;
   password_confirmation: string;
-}
+};
 
-interface ErrorProps {
+type ErrorProps = {
   name?: string[];
   email?: string[];
   username?: string[];
   password?: string[];
-}
+};
 
-interface RegisterProps {
+type RegisterProps = {
   logoutNotification: (message: string) => void;
-}
+};
 const Register = ({ logoutNotification }: RegisterProps) => {
   const [formData, setFormData] = useState<FormDataProps>({
     name: "",

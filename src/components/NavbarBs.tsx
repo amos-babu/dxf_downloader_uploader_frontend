@@ -6,9 +6,9 @@ import axios from "axios";
 import { useAuth } from "../utils/AuthContext";
 import { IoPersonCircle } from "react-icons/io5";
 
-interface NavProps {
+type NavProps = {
   logoutNotification: (message: string) => void;
-}
+};
 
 const NavbarBs = ({ logoutNotification }: NavProps) => {
   const { logout, loggedIn, profileData } = useAuth();

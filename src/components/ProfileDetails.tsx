@@ -2,7 +2,9 @@ import { IoPersonCircle } from "react-icons/io5";
 import { useAuth } from "../utils/AuthContext";
 
 export default function ProfileDetails() {
-  const { profileData } = useAuth();
+  const { userData, canEdit } = useAuth();
+
+  console.log(userData?.username, canEdit);
   return (
     <>
       <div
@@ -28,26 +30,28 @@ export default function ProfileDetails() {
               position: "absolute",
             }}
           />
-          <button
-            type="button"
-            data-mdb-button-init
-            data-mdb-ripple-init
-            className="btn btn-outline-dark"
-            data-mdb-ripple-color="dark"
-            style={{ zIndex: "1" }}
-          >
-            Edit profile
-          </button>
+          {canEdit && (
+            <button
+              type="button"
+              data-mdb-button-init
+              data-mdb-ripple-init
+              className="btn btn-outline-dark"
+              data-mdb-ripple-color="dark"
+              style={{ zIndex: "1" }}
+            >
+              Edit profile
+            </button>
+          )}
         </div>
         <div className="ms-3" style={{ marginTop: "130px" }}>
-          <h5>{profileData?.name}</h5>
+          <h5>{userData?.name}</h5>
           <p>New York</p>
         </div>
       </div>
       <div className="mb-5  text-body" style={{ marginTop: "130px" }}>
         <p className="lead fw-normal mx-3 mb-1">About</p>
         <div className="p-4 bg-body-tertiary">
-          <p className="font-italic mb-1">{profileData?.bio}</p>
+          <p className="font-italic mb-1">{userData?.bio}</p>
         </div>
       </div>
     </>

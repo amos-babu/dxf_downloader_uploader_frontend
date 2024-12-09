@@ -4,19 +4,20 @@ import { Card } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../utils/AuthContext";
 
-interface FormDataProps {
+type FormDataProps = {
   email: string;
   password: string;
-}
+};
 
-interface ErrorProps {
+type ErrorProps = {
   email?: string[];
   password?: string[];
-}
+};
 
-interface LoginProps {
+type LoginProps = {
   logoutNotification: (message: string) => void;
-}
+};
+
 const Login = ({ logoutNotification }: LoginProps) => {
   const [formData, setFormData] = useState<FormDataProps>({
     email: "",

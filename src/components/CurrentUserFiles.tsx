@@ -1,7 +1,21 @@
+import { useParams } from "react-router-dom";
 import { useAuth } from "../utils/AuthContext";
+import { useEffect } from "react";
 
 export default function CurrentUserFiles() {
-  const { profileData } = useAuth();
+  // const { profileData } = useAuth();
+
+  const { id } = useParams<{ id: string }>();
+  const { setId, userData } = useAuth();
+  const userfilesData = userData?.files;
+
+  console.log(userfilesData);
+
+  useEffect(() => {
+    if (id) {
+      setId(id); // Update the context with the `id` or null if not available
+    }
+  }, [id, setId]);
   return (
     <>
       <div className="d-flex justify-content-between align-items-center mb-4 text-body">
@@ -13,8 +27,8 @@ export default function CurrentUserFiles() {
         </p>
       </div>
       <div className="row">
-        {profileData?.files.map((file) => (
-          <div className="col-md-6 mb-2">
+        {userfilesData?.map((file) => (
+          <div key={file.id} className="col-md-4 mb-2">
             <img
               src={file.picture_path}
               alt="image 1"
@@ -22,14 +36,6 @@ export default function CurrentUserFiles() {
             />
           </div>
         ))}
-
-        <div className="col-md-6 mb-2">
-          <img
-            src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(112).webp"
-            alt="image 1"
-            className="w-100 rounded-3 mx-1"
-          />
-        </div>
       </div>
     </>
   );
