@@ -4,7 +4,8 @@ import { useAuth } from "../utils/AuthContext";
 export default function ProfileDetails() {
   const { userData, canEdit } = useAuth();
 
-  console.log(userData?.username, canEdit);
+  console.log();
+
   return (
     <>
       <div
@@ -15,30 +16,28 @@ export default function ProfileDetails() {
           className="ms-4 mt-5 d-flex flex-column"
           style={{ width: "150px" }}
         >
-          <img
-            src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
-            alt="Generic placeholder image"
-            className="img-fluid img-thumbnail mt-4 mb-2"
-            style={{ width: "150px", zIndex: "1" }}
-          />
-          <IoPersonCircle
-            className="img-fluid mt-4 mb-2"
-            style={{
-              cursor: "pointer",
-              width: "150px",
-              zIndex: "1",
-              position: "absolute",
-            }}
-          />
+          {userData?.profile_pic_path ? (
+            <img
+              src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+              alt="Generic placeholder image"
+              className="img-fluid img-thumbnail mt-4 mb-2"
+              style={{ width: "150px", zIndex: "1" }}
+            />
+          ) : (
+            <div className="">
+              <IoPersonCircle
+                className="img-fluid  mt-2 mb-2"
+                style={{
+                  cursor: "pointer",
+                  width: "150px",
+                  zIndex: "1",
+                }}
+              />
+            </div>
+          )}
+
           {canEdit && (
-            <button
-              type="button"
-              data-mdb-button-init
-              data-mdb-ripple-init
-              className="btn btn-outline-dark"
-              data-mdb-ripple-color="dark"
-              style={{ zIndex: "1" }}
-            >
+            <button type="button" className="btn btn-outline-dark">
               Edit profile
             </button>
           )}

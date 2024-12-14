@@ -30,13 +30,14 @@ const Register = ({ logoutNotification }: RegisterProps) => {
     password_confirmation: "",
   });
   const [error, setError] = useState<ErrorProps>({});
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const navigate = useNavigate();
 
   const submitRegisterForm = (e: React.FormEvent) => {
     e.preventDefault();
     axios
-      .post("http://127.0.0.1:8000/api/register", formData)
+      .post(`${apiUrl}register`, formData)
       .then((res) => {
         const token = res.data.token;
         localStorage.setItem("token", token);

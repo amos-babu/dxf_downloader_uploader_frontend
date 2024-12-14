@@ -12,7 +12,8 @@ type AuthContextProviderProps = {
 };
 
 type AuthContextTypeProps = {
-  isAuthenticated: boolean;
+  isAuthenticated: boolean | null;
+  isInitialized: boolean;
   loggedIn: boolean;
   login: (userToken: string) => void;
   setId: (id: string) => void;
@@ -43,33 +44,31 @@ type ProfileDetailsProps = {
 const AuthContext = createContext<AuthContextTypeProps | undefined>(undefined);
 
 export const AuthProvider = ({ children }: AuthContextProviderProps) => {
-  const [token, setToken] = useState<string | null>(null);
   const [idParams, setIdParams] = useState<string | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+  const [isInitialized, setIsInitialized] = useState<boolean>(false);
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const [canEdit, setCanEdit] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(true);
   const [userData, setUserData] = useState<ProfileDetailsProps | null>(null);
   const authToken = localStorage.getItem("token");
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
         const endpoint = idParams
-          ? `http://127.0.0.1:8000/api/user_details/${idParams}`
-          : `http://127.0.0.1:8000/api/user`;
+          ? `${apiUrl}user_details/${idParams}`
+          : `${apiUrl}user`;
 
         const response = await axios.get<profileEditResponse>(endpoint, {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
         });
-        // console.log(response);
         setCanEdit(response.data.can_edit);
         setUserData(response.data.data);
       } catch (error) {
         console.error(error);
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -77,9 +76,9 @@ export const AuthProvider = ({ children }: AuthContextProviderProps) => {
   }, [idParams, authToken]);
 
   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
-    if (storedToken) {
-      setToken(storedToken);
+    if (authToken) {
+      setIsAuthenticated(!!authToken);
+      setIsInitialized(true);
       setLoggedIn(true);
     }
   }, []);
@@ -89,22 +88,22 @@ export const AuthProvider = ({ children }: AuthContextProviderProps) => {
   };
 
   const login = (userToken: string) => {
-    setToken(userToken);
     localStorage.setItem("token", userToken);
+    setIsAuthenticated(true);
     setLoggedIn(true);
   };
 
   const logout = () => {
-    setToken(null);
     localStorage.removeItem("token");
+    setIsAuthenticated(false);
     setLoggedIn(false);
   };
 
-  const isAuthenticated = !!token;
   return (
     <AuthContext.Provider
       value={{
         isAuthenticated,
+        isInitialized,
         setId,
         login,
         logout,

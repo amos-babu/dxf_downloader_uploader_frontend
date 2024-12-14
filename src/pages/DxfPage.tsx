@@ -22,17 +22,20 @@ type FileProps = {
 
 export const DxfPage = () => {
   const [file, setFile] = useState<FileProps | null>(null);
+  const apiUrl = import.meta.env.VITE_API_URL;
   const { id } = useParams();
   const navigate = useNavigate();
   const [isDownloading, setIsDownloading] = useState(false);
+
+  // console.log(apiUrl);
 
   const fetchFile = async () => {
     if (id) {
       try {
         const response = await axios.get(
-          `http://127.0.0.1:8000/api/file_display/${id}`
+          `
+          ${apiUrl}file_display/${id}`
         );
-        console.log(response);
         setFile(response.data.data);
       } catch (error) {
         console.error("Error fetching file:", error);
@@ -55,18 +58,17 @@ export const DxfPage = () => {
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement("a");
         link.href = url;
-        // Set the desired file name
+
         link.setAttribute("download", "file.jpg");
 
-        // Append the link to the body, trigger the download, and clean up
         document.body.appendChild(link);
         link.click();
         link.remove();
-        window.URL.revokeObjectURL(url); // Free up memory
+        window.URL.revokeObjectURL(url);
       } catch (error) {
         console.error("Error downloading file:", error);
       } finally {
-        setIsDownloading(false); // Reset the downloading state
+        setIsDownloading(false);
       }
     }
   };
@@ -77,31 +79,26 @@ export const DxfPage = () => {
 
     if (id) {
       try {
-        // Use Axios to fetch the file as a binary stream
         const response = await axios.get(
           `http://127.0.0.1:8000/api/download_dxf/${id}`,
           {
-            responseType: "blob", // Important to specify the response type
+            responseType: "blob",
           }
         );
 
-        // Create a URL for the file and simulate a click to download it
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement("a");
         link.href = url;
 
-        // Set the desired file name
         link.setAttribute("download", "file.dxf");
-
-        // Append the link to the body, trigger the download, and clean up
         document.body.appendChild(link);
         link.click();
         link.remove();
-        window.URL.revokeObjectURL(url); // Free up memory
+        window.URL.revokeObjectURL(url);
       } catch (error) {
         console.error("Error downloading file:", error);
       } finally {
-        setIsDownloading(false); // Reset the downloading state
+        setIsDownloading(false);
       }
     }
   };
@@ -131,13 +128,13 @@ export const DxfPage = () => {
             <div className="col-md-6 position-relative">
               <Image
                 src={file.picture_path}
-                className="img-fluid rounded-start"
+                className="img-fluid rounded-start img-thumbnail mx-auto d-block"
                 alt="..."
               />
             </div>
             <div className="col-md-6">
               <div className="card-body">
-                <h5 className="card-title">{file.user.username}</h5>
+                <h4 className="card-title">{file.user.username}</h4>
                 <h5 className="card-title">{file.title}</h5>
                 <p className="card-text">{file.description}</p>
                 <div className="d-flex justify-content-between">

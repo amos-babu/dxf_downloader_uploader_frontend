@@ -30,6 +30,7 @@ export const Create = () => {
   const [error, setError] = useState<ErrorProps>({});
   const [authError, setAuthError] = useState<AuthError>({});
   const [authErrorDisplay, setAuthErrorDisplay] = useState<boolean>(false);
+  const apiUrl = import.meta.env.VITE_API_URL;
   const token = localStorage.getItem("token");
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,7 +48,7 @@ export const Create = () => {
     }
 
     axios
-      .post("http://127.0.0.1:8000/api/upload_file", data, {
+      .post(`${apiUrl}upload_file`, data, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,

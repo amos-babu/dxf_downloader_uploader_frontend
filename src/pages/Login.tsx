@@ -25,12 +25,13 @@ const Login = ({ logoutNotification }: LoginProps) => {
   });
   const [error, setError] = useState<ErrorProps>({});
   const { login } = useAuth();
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const navigate = useNavigate();
   const submitLoginForm = (e: React.FormEvent) => {
     e.preventDefault();
     axios
-      .post("http://127.0.0.1:8000/api/login", formData)
+      .post(`${apiUrl}login`, formData)
       .then((res) => {
         const token = res.data.token;
         // console.log(res.data);

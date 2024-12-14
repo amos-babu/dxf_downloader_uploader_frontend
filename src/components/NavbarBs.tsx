@@ -11,12 +11,13 @@ type NavProps = {
 };
 
 const NavbarBs = ({ logoutNotification }: NavProps) => {
-  const { logout, loggedIn, profileData } = useAuth();
+  const { logout, loggedIn, userData } = useAuth();
   const token = localStorage.getItem("token");
+  const apiUrl = import.meta.env.VITE_API_URL;
   const handleLogout = () => {
     axios
       .post(
-        `http://127.0.0.1:8000/api/logout`,
+        `${apiUrl}logout`,
         {},
         {
           headers: {
@@ -25,7 +26,6 @@ const NavbarBs = ({ logoutNotification }: NavProps) => {
         }
       )
       .then((res) => {
-        // console.log(res);
         logoutNotification(res.data.message);
         logout();
       })
@@ -50,9 +50,9 @@ const NavbarBs = ({ logoutNotification }: NavProps) => {
           <>
             <Dropdown>
               <Dropdown.Toggle as="span" id="dropdown-custom-components">
-                {profileData?.profile_pic_path ? (
+                {userData?.profile_pic_path ? (
                   <img
-                    src={profileData?.profile_pic_path}
+                    src={userData?.profile_pic_path}
                     className="rounded-circle"
                     style={{ width: "40px", cursor: "pointer" }}
                     alt="Avatar"
