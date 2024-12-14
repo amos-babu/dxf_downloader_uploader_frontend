@@ -1,50 +1,48 @@
-# React + TypeScript + Vite
+# Frontend Repository
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Project Overview
+This repository contains the frontend code for a web application built using **React** and **TypeScript**. It provides a modern, responsive, and user-friendly interface for interacting with the application's features.
 
-Currently, two official plugins are available:
+## Features
+- **React**: A component-based library for building the user interface.
+- **TypeScript**: Strongly-typed language for improved code quality and maintainability.
+- **Responsive Design**: Optimized for all screen sizes.
+- Integration with the backend API for real-time functionality.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Technologies Used
+- React
+- TypeScript
+- Bootstrap (or other UI libraries if applicable)
+- Axios for API requests
 
-## Expanding the ESLint configuration
+## Setup Instructions
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/your-username/frontend-repo.git
+   ```
 
-- Configure the top-level `parserOptions` property like this:
+2. **Navigate to the project directory:**
+   ```bash
+   cd frontend-repo
+   ```
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+3. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+4. **Create a `.env` file in the root directory and configure the API URL:**
+   ```env
+   VITE_API_URL=http://your-backend-url/api/
+   ```
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+5. **Start the development server:**
+   ```bash
+   npm run dev
+   ```
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+6. **Open the application in your browser at** `http://localhost:5173`.
+
+## Deployment
+To deploy the frontend application, you can use platforms like **Netlify**, **Vercel**, or **AWS S3**. Make sure to configure the API URL to point to the production backend.
