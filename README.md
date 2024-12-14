@@ -19,7 +19,7 @@ This repository contains the frontend code for a web application built using **R
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-username/frontend-repo.git
+   git clone https://github.com/amos-babu/frontend-repo.git
    ```
 
 2. **Navigate to the project directory:**
