@@ -12,6 +12,9 @@ type AuthContextProviderProps = {
 };
 
 type AuthContextTypeProps = {
+  show: boolean;
+  handleClose: () => void;
+  handleShow: () => void;
   isAuthenticated: boolean | null;
   isInitialized: boolean;
   loggedIn: boolean;
@@ -52,6 +55,9 @@ export const AuthProvider = ({ children }: AuthContextProviderProps) => {
   const [userData, setUserData] = useState<ProfileDetailsProps | null>(null);
   const authToken = localStorage.getItem("token");
   const apiUrl = import.meta.env.VITE_API_URL;
+  const [show, setShow] = useState<boolean>(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -102,6 +108,9 @@ export const AuthProvider = ({ children }: AuthContextProviderProps) => {
   return (
     <AuthContext.Provider
       value={{
+        show,
+        handleClose,
+        handleShow,
         isAuthenticated,
         isInitialized,
         setId,

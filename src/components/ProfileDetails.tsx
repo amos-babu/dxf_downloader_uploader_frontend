@@ -1,10 +1,9 @@
 import { IoPersonCircle } from "react-icons/io5";
 import { useAuth } from "../utils/AuthContext";
+import UpdateProfile from "./UpdateProfile";
 
 export default function ProfileDetails() {
-  const { userData, canEdit } = useAuth();
-
-  console.log();
+  const { userData, canEdit, handleShow } = useAuth();
 
   return (
     <>
@@ -37,14 +36,19 @@ export default function ProfileDetails() {
           )}
 
           {canEdit && (
-            <button type="button" className="btn btn-outline-dark">
+            <button
+              type="button"
+              onClick={handleShow}
+              className="btn btn-outline-dark"
+            >
               Edit profile
             </button>
           )}
+
+          <UpdateProfile />
         </div>
         <div className="ms-3" style={{ marginTop: "130px" }}>
           <h5>{userData?.name}</h5>
-          <p>New York</p>
         </div>
       </div>
       <div className="mb-5  text-body" style={{ marginTop: "130px" }}>
