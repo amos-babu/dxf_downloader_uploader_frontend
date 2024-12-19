@@ -48,12 +48,9 @@ export const DxfPage = () => {
     e.preventDefault();
     if (id) {
       try {
-        const response = await axios.get(
-          `http://127.0.0.1:8000/api/download_image/${id}`,
-          {
-            responseType: "blob",
-          }
-        );
+        const response = await axios.get(`${apiUrl}download_image/${id}`, {
+          responseType: "blob",
+        });
 
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement("a");
