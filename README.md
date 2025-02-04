@@ -1,6 +1,6 @@
 # Frontend Repository
 
-**Backend repository** https://github.com/amos-babu/dxf_downloader_uploader_backend
+**Backend repository** https://github.com/amos-babu/dxf_downloader_uploader-backend
 
 ## Project Overview
 This repository contains the frontend code for a web application built using **React** and **TypeScript**. It provides a modern, responsive, and user-friendly interface for interacting with the application's features.
