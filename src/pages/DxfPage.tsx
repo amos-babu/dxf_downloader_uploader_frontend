@@ -27,7 +27,7 @@ export const DxfPage = () => {
   const navigate = useNavigate();
   const [isDownloading, setIsDownloading] = useState(false);
 
-  // console.log(apiUrl);
+  console.log(isDownloading);
 
   const fetchFile = async () => {
     if (id) {

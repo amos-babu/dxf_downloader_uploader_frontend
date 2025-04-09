@@ -24,6 +24,8 @@ const SearchFile = () => {
       return;
     }
 
+    console.log(results);
+
     try {
       const response = await axios.get("http://127.0.0.1:8000/api/search", {
         params: { query: searchQuery },
@@ -101,7 +103,7 @@ const SearchFile = () => {
                     </div>
                   </div>
                 </div>
-                {/* {results.length > 0 ? (
+                {results.length > 0 ? (
                   results.map((result) => (
                     <div
                       key={result.id}
@@ -127,7 +129,7 @@ const SearchFile = () => {
                   ))
                 ) : (
                   <p className="text-muted mx-3">No results found.</p>
-                )} */}
+                )}
               </div>
             </div>
           </Card.Body>
