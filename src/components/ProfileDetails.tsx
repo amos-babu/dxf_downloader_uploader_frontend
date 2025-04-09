@@ -47,8 +47,9 @@ export default function ProfileDetails() {
 
           <UpdateProfile />
         </div>
-        <div className="ms-3" style={{ marginTop: "130px" }}>
+        <div className="ms-3" style={{ marginTop: "110px" }}>
           <h5>{userData?.name}</h5>
+          <h6>@{userData?.username}</h6>
         </div>
       </div>
       <div className="mb-5  text-body" style={{ marginTop: "130px" }}>

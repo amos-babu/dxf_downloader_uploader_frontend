@@ -34,8 +34,10 @@ const Login = ({ logoutNotification }: LoginProps) => {
       .post(`${apiUrl}login`, formData)
       .then((res) => {
         const token = res.data.token;
+        const tokenExpiryDate = res.data.token_expires_at;
+        localStorage.setItem("token_expiry_date", tokenExpiryDate);
         // console.log(res.data);
-        login(token);
+        login(token, tokenExpiryDate);
 
         logoutNotification("Login Successfull!");
         navigate("/");

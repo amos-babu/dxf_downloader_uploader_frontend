@@ -76,12 +76,9 @@ export const DxfPage = () => {
 
     if (id) {
       try {
-        const response = await axios.get(
-          `http://127.0.0.1:8000/api/download_dxf/${id}`,
-          {
-            responseType: "blob",
-          }
-        );
+        const response = await axios.get(`${apiUrl}download_dxf/${id}`, {
+          responseType: "blob",
+        });
 
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement("a");
@@ -131,7 +128,9 @@ export const DxfPage = () => {
             </div>
             <div className="col-md-6">
               <div className="card-body">
-                <h4 className="card-title">{file.user.username}</h4>
+                <div className="d-flex me-auto">
+                  <h4 className="card-title">@{file.user.username}</h4>
+                </div>
                 <h5 className="card-title">{file.title}</h5>
                 <p className="card-text">{file.description}</p>
                 <div className="d-flex justify-content-between">

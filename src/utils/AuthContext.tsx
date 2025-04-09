@@ -18,7 +18,7 @@ type AuthContextTypeProps = {
   isAuthenticated: boolean | null;
   isInitialized: boolean;
   loggedIn: boolean;
-  login: (userToken: string) => void;
+  login: (userToken: string, tokenExpiryDate: string) => void;
   setId: (id: string) => void;
   logout: () => void;
   userData: ProfileDetailsProps | null;
@@ -81,6 +81,31 @@ export const AuthProvider = ({ children }: AuthContextProviderProps) => {
     fetchUserProfile();
   }, [idParams, authToken]);
 
+  const checkTokenExpiry = (
+    userToken: string | null,
+    authTokenExpiry: string | null
+  ) => {
+    if (!authTokenExpiry || !userToken) {
+      logout();
+      return null;
+    }
+
+    const now = Date.now();
+    const expiryTime = parseInt(authTokenExpiry, 10);
+
+    if (now > expiryTime) {
+      logout();
+      return null;
+    }
+    return userToken;
+  };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const tokenExpiry = localStorage.getItem("token_expiry_date");
+    checkTokenExpiry(token, tokenExpiry);
+  }, []);
+
   useEffect(() => {
     if (authToken) {
       setIsAuthenticated(!!authToken);
@@ -93,14 +118,16 @@ export const AuthProvider = ({ children }: AuthContextProviderProps) => {
     setIdParams(id);
   };
 
-  const login = (userToken: string) => {
+  const login = (userToken: string, authTokenExpiry: string) => {
     localStorage.setItem("token", userToken);
+    localStorage.setItem("token_expiry_date", authTokenExpiry);
     setIsAuthenticated(true);
     setLoggedIn(true);
   };
 
   const logout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("token_expiry_date");
     setIsAuthenticated(false);
     setLoggedIn(false);
   };

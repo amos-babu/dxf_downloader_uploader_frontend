@@ -40,7 +40,9 @@ const Register = ({ logoutNotification }: RegisterProps) => {
       .post(`${apiUrl}register`, formData)
       .then((res) => {
         const token = res.data.token;
+        const tokenExpiryDate = res.data.token_expires_at;
         localStorage.setItem("token", token);
+        localStorage.setItem("token_expiry_date", tokenExpiryDate);
         logoutNotification("Registration Successfull");
         navigate("/");
       })

@@ -27,6 +27,7 @@ function App() {
   return (
     <>
       <NavbarBs logoutNotification={logoutNotification} />
+
       <div className="container mb-4">
         {notification && (
           <div className="row position-relative">
@@ -40,6 +41,7 @@ function App() {
             </div>
           </div>
         )}
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="*" element={<NotFound />} />

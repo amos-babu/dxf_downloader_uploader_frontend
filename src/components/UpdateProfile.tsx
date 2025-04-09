@@ -46,9 +46,10 @@ function UpdateProfile() {
     if (formData.profile_image) {
       data.append("profile_pic_path", formData.profile_image);
     }
-    for (let [key, value] of data.entries()) {
-      console.log(key, value);
-    }
+
+    // for (let [key, value] of data.entries()) {
+    //   console.log(key, value);
+    // }
 
     axios
       .put(`${apiUrl}update_user`, data, {
@@ -65,6 +66,7 @@ function UpdateProfile() {
       .catch((error) => {
         if (error.response?.status === 422) {
           const errors = error.response.data.errors;
+          console.log(errors);
           setError("There were validation issues. Please check the form.");
         } else {
           setError("An error occurred. Please try again later.");
@@ -74,8 +76,10 @@ function UpdateProfile() {
 
   return (
     <Modal show={show} onHide={handleClose}>
-      <Modal.Header closeButton>
+      <div className="mx-3 mt-3">
         {error && <div className="alert alert-danger">{error}</div>}
+      </div>
+      <Modal.Header closeButton>
         <Modal.Title>Edit Profile</Modal.Title>
       </Modal.Header>
       <Form onSubmit={handleSubmit}>
