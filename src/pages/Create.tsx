@@ -61,7 +61,6 @@ export const Create = () => {
       })
       .catch((error) => {
         if (error.status === 422) {
-          // console.log(error);
           setError(error.response.data.errors);
         } else {
           setAuthErrorDisplay(true);

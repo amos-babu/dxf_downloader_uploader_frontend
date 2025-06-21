@@ -35,8 +35,9 @@ const Login = ({ logoutNotification }: LoginProps) => {
       .then((res) => {
         const token = res.data.token;
         const tokenExpiryDate = res.data.token_expires_at;
+      
         localStorage.setItem("token_expiry_date", tokenExpiryDate);
-        // console.log(res.data);
+        console.log(res.data);
         login(token, tokenExpiryDate);
 
         logoutNotification("Login Successfull!");

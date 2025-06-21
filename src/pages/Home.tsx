@@ -25,6 +25,7 @@ export const Home = () => {
 
   const fetchFiles = async () => {
     const response = await axios.get(`${apiUrl}retrieve_files`);
+    console.log(response.data.data)
     setFiles(response.data.data);
   };
 
