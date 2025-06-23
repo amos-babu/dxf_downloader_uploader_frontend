@@ -1,16 +1,21 @@
 const Masonry = () => {
+  const items = [
+    { item:  "Item 1", style: "item1"},
+    { item:  "Item 2", style: "item2"},
+    { item:  "Item 3", style: "item3"},
+    { item:  "Item 4", style: "item4"},
+    { item:  "Item 5", style: "item5"},
+    { item:  "Item 6", style: "item6"},
+    { item:  "Item 7", style: "item7"},
+    { item:  "Item 8", style: "item8"},
+    { item:  "Item 9", style: "item9"},
+    { item:  "Item 10", style: "item10"},
+  ]
   return (
     <div className="masonry">
-      <div className="item item1">Item 1</div>
-      <div className="item item2">Item 2</div>
-      <div className="item item3">Item 3</div>
-      <div className="item item4">Item 4</div>
-      <div className="item item5">Item 5</div>
-      <div className="item item6">Item 6</div>
-      <div className="item item7">Item 7</div>
-      <div className="item item8">Item 8</div>
-      <div className="item item9">Item 9</div>
-      <div className="item item10">Item 10</div>
+      {items.map((item, index) => (
+          <div key={index} className={`item ${item.style}`}>{item.item}</div>
+      ))}
     </div>
   );
 };

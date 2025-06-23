@@ -1,8 +1,8 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 import { IoPersonCircle } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import MasonryLayout from "../components/MasonryLayout";
+import { useFile } from "../utils/FileContext";
 
 type UserProps = {
   id: number;
@@ -20,21 +20,13 @@ type File = {
 };
 
 export const Home = () => {
-  const [files, setFiles] = useState<File[]>([]);
-  const apiUrl = import.meta.env.VITE_API_URL;
-
-  const fetchFiles = async () => {
-    const response = await axios.get(`${apiUrl}retrieve_files`);
-    console.log(response.data.data)
-    setFiles(response.data.data);
-  };
-
-  useEffect(() => {
-    fetchFiles();
-  }, []);
+  const { files } = useFile()
+  
   return (
     <>
       <div className="row">
+        <MasonryLayout/>
+
         {files ? (
           files.map((file: File) => (
             <div key={file.id} className="col-md-3 mb-4">
