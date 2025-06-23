@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { Button, FloatingLabel, Form } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 type FormDataProps = {
   title: string;
@@ -32,6 +33,7 @@ export const Create = () => {
   const [authErrorDisplay, setAuthErrorDisplay] = useState<boolean>(false);
   const apiUrl = import.meta.env.VITE_API_URL;
   const token = localStorage.getItem("token");
+  const navigate = useNavigate()
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const data = new FormData();
@@ -56,7 +58,7 @@ export const Create = () => {
       })
       .then((response) => {
         console.log("File Uploaded Successfully", response.data);
-        setFormData({ title: "", description: "", dxf: null, dxfImage: null });
+        navigate('/')
         setSuccess(true);
       })
       .catch((error) => {

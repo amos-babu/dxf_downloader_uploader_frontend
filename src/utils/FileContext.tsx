@@ -26,7 +26,7 @@ type File = {
 
 const FileContext = createContext<FileContextTypeProps | undefined>(undefined)
 
-export const FileContextProvider = ({children}: FileContextProviderProps) => {
+export const FileContextProvider = ({children}: FileContextProviderProps): JSX.Element => {
     const [files, setFiles] = useState<File[]>([]);
     const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -47,7 +47,7 @@ return (
 export const useFile = () => {
     const context = useContext(FileContext)
     if(!context){
-        throw new Error("useFile must be within an FileProvider"); 
+        throw new Error("useFile must be within an FileContextProvider"); 
     }
     return context
 }
