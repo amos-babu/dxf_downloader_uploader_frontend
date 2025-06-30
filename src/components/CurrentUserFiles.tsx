@@ -23,6 +23,7 @@ export default function CurrentUserFiles() {
         </p>
       </div>
       <div className="row">
+        {/* <MasonryLayout files = {userfilesData}/> */}
         {userfilesData?.map((file) => (
           <Link to={`/show/${file.id}`} key={file.id} className="col-md-4 mb-2">
             <img

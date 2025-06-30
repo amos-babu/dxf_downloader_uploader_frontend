@@ -19,8 +19,6 @@ type File = {
   id: number;
   title: string;
   picture_path: string;
-  dxf_path: string;
-  description: string;
   user: UserProps;
 };
 
@@ -32,7 +30,7 @@ export const FileContextProvider = ({children}: FileContextProviderProps): JSX.E
 
     const fetchFiles = async () => {
     const response = await axios.get(`${apiUrl}retrieve_files`);
-    console.log(response.data.data)
+    // console.log(response.data.data)
     setFiles(response.data.data);
     };
 

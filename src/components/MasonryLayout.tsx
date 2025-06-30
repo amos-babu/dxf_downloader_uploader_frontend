@@ -1,6 +1,5 @@
 import { Card } from "react-bootstrap";
 import Masonry from "react-masonry-css"
-import { useFile } from "../utils/FileContext";
 import { Link } from "react-router-dom";
 import { IoPersonCircle } from "react-icons/io5";
 
@@ -14,13 +13,14 @@ type File = {
   id: number;
   title: string;
   picture_path: string;
-  dxf_path: string;
-  description: string;
   user: UserProps;
 };
 
-const MasonryLayout = () => {
-  const { files } = useFile()
+type MasonryLayoutProps = {
+  files: File[]
+}
+
+const MasonryLayout = ({ files }: MasonryLayoutProps ) => {
   return (
       <Masonry
         breakpointCols={3}

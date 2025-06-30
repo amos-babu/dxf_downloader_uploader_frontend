@@ -26,8 +26,9 @@ type AuthContextTypeProps = {
 };
 
 type CurrentUserFilesPictureProps = {
-  picture_path: string;
   id: number;
+  picture_path: string;
+  title: string;
 };
 
 type profileEditResponse = {
@@ -37,7 +38,6 @@ type profileEditResponse = {
 
 type ProfileDetailsProps = {
   name: string;
-  email: string;
   username: string;
   bio: string | null;
   profile_pic_path: string | null;
@@ -94,8 +94,6 @@ export const AuthProvider = ({ children }: AuthContextProviderProps) => {
     const expiryTime = parseInt(authTokenExpiry, 10);
 
     if (now < expiryTime) {
-      console.log("Now:", now)
-      console.log("Expiry Date:", expiryTime)
       logout();
       return null;
     }
