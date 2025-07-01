@@ -2,6 +2,8 @@ import { Card } from "react-bootstrap";
 import Masonry from "react-masonry-css"
 import { Link } from "react-router-dom";
 import { IoPersonCircle } from "react-icons/io5";
+import { useEffect, useState } from "react";
+import useWindowWidth from "../hooks/useWidthHook";
 
 type UserProps = {
   id: number;
@@ -21,9 +23,26 @@ type MasonryLayoutProps = {
 }
 
 const MasonryLayout = ({ files }: MasonryLayoutProps ) => {
+  const [breakpointColNums, setBreakpointColNums] = useState(3);
+  
+
+const width = useWindowWidth()
+
+useEffect(() => {
+  if (width < 640) {
+    setBreakpointColNums(2)
+  } else if ( width < 768 ){
+    setBreakpointColNums(3)
+  } else if (width < 1024 ){
+    setBreakpointColNums(3)
+  } else {
+    setBreakpointColNums(4)
+  }
+}, [width])
+
   return (
       <Masonry
-        breakpointCols={3}
+        breakpointCols={breakpointColNums}
         className="my-masonry-grid"
         columnClassName="my-masonry-grid_column">
           {files ?
@@ -38,7 +57,7 @@ const MasonryLayout = ({ files }: MasonryLayoutProps ) => {
                     src={file.picture_path}
                   />
                   <h3 className="mx-2 mt-2 rounded text-dark">
-                    <Card.Title>{file.title}</Card.Title>
+                    <Card.Title className="text-wrap">{file.title}</Card.Title>
                   </h3>
                 </Link>
                 <div className="mx-2 mb-2 rounded text-dark">
@@ -60,7 +79,7 @@ const MasonryLayout = ({ files }: MasonryLayoutProps ) => {
                         size={40}
                       />
                     )}
-                    <div className="mt-1 mx-3 fw-bolder font-monospace text-muted fs-6">
+                    <div className="mt-1 mx-3 fw-bolder font-monospace text-muted text-wrap fs-6">
                       {file.user.username}
                     </div>
                   </Link>

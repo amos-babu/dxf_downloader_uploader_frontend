@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Button, Image } from "react-bootstrap";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { useNavigate, useParams } from "react-router-dom";
+import { useFile } from "../utils/FileContext";
 
 type UserFileProps = {
   id: number;
@@ -24,10 +25,14 @@ export const DxfPage = () => {
   const [file, setFile] = useState<FileProps | null>(null);
   const apiUrl = import.meta.env.VITE_API_URL;
   const { id } = useParams();
+  const { fetchSimilarFiles } = useFile()
   const navigate = useNavigate();
-  const [isDownloading, setIsDownloading] = useState(false);
+  const [isDownloadingFile, setIsDownloadingFile] = useState(false);
+  const [isDownloadingImage, setIsDownloadingImage] = useState(false);
 
-  console.log(isDownloading);
+  if (id){
+    fetchSimilarFiles(id)
+  }
 
   const fetchFile = async () => {
     if (id) {
@@ -44,7 +49,7 @@ export const DxfPage = () => {
   };
 
   const handleDownloadImage = async (e: React.FormEvent) => {
-    setIsDownloading(true);
+    setIsDownloadingImage(true);
     e.preventDefault();
     if (id) {
       try {
@@ -65,13 +70,13 @@ export const DxfPage = () => {
       } catch (error) {
         console.error("Error downloading file:", error);
       } finally {
-        setIsDownloading(false);
+        setIsDownloadingImage(false);
       }
     }
   };
 
   const handleDownloadDxf = async (e: React.FormEvent) => {
-    setIsDownloading(true);
+    setIsDownloadingFile(true);
     e.preventDefault();
 
     if (id) {
@@ -92,7 +97,7 @@ export const DxfPage = () => {
       } catch (error) {
         console.error("Error downloading file:", error);
       } finally {
-        setIsDownloading(false);
+        setIsDownloadingFile(false);
       }
     }
   };
@@ -135,14 +140,32 @@ export const DxfPage = () => {
                 <p className="card-text">{file.description}</p>
                 <div className="d-flex justify-content-between">
                   <Button variant="dark" onClick={handleDownloadImage}>
-                    Download Image file
+                     {isDownloadingImage ? (
+                       <>
+                       <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <span className="sr-only">Loading...</span>
+                       </>
+                     ):(
+                      <>
+                        Download Image file
+                      </>
+                     )}
                   </Button>
                   <Button
                     variant="dark"
                     onClick={handleDownloadDxf}
                     className="mx-3"
                   >
-                    Download DXF file
+                    {isDownloadingImage ? (
+                       <>
+                       <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <span className="sr-only">Loading...</span>
+                       </>
+                     ):(
+                      <>
+                         Download DXF file
+                      </>
+                     )}
                   </Button>
                 </div>
                 <p className="card-text mt-3">
