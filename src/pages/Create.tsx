@@ -3,6 +3,8 @@ import { useState } from "react";
 import { Button, FloatingLabel, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
+type FileUploadProps = "idle" | "uploading" | "success" | "error";
+
 type FormDataProps = {
   title: string;
   description: string;
