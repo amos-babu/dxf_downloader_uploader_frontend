@@ -1,14 +1,20 @@
 import axios from "axios";
-import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 type FileContextProviderProps = {
-    children: ReactNode
-}
+  children: ReactNode;
+};
 
 type FileContextTypeProps = {
-    files: File[]
-    fetchSimilarFiles: (id: string) => void;
-}
+  files: File[] | null;
+  fetchSimilarFiles: (id: string) => void;
+};
 
 type UserProps = {
   id: number;
@@ -23,57 +29,59 @@ type File = {
   user: UserProps;
 };
 
-const FileContext = createContext<FileContextTypeProps | undefined>(undefined)
+const FileContext = createContext<FileContextTypeProps | undefined>(undefined);
 
-export const FileContextProvider = ({children}: FileContextProviderProps): JSX.Element => {
-    const [files, setFiles] = useState<File[]>([]);
-    const apiUrl = import.meta.env.VITE_API_URL;
+export const FileContextProvider = ({
+  children,
+}: FileContextProviderProps): JSX.Element => {
+  const [files, setFiles] = useState<File[] | null>([]);
+  const apiUrl = import.meta.env.VITE_API_URL;
 
-    const fetchFiles = async () => {
-        try {
-            const response = await axios.get(`${apiUrl}retrieve_files`);
-            setFiles(response.data.data);
-        } catch (error) {
-            console.error("Error fetching files:", error)
-        }
-    };
+  const fetchFiles = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}retrieve_files`);
+      setFiles(response.data.data);
+    } catch (error) {
+      console.error("Error fetching files:", error);
+    }
+  };
 
-    
-    const fetchSimilarFiles = async (id: string) => {
-        if (id) {
-          try {
-            const response = await axios.get(
-              `
+  const fetchSimilarFiles = async (id: string) => {
+    if (id) {
+      try {
+        const response = await axios.get(
+          `
               ${apiUrl}similar_files/${id}`
-            );
+        );
 
-            // return response.data.data
-            console.log(response.data.data)
-            // setFile(response.data.data);
-          } catch (error) {
-            console.error("Error fetching file:", error);
-          }
-        }
-      };
+        // return response.data.data
+        // console.log(response.data.data);
+        setFiles(response.data.data);
+      } catch (error) {
+        console.error("Error fetching file:", error);
+      }
+    }
+  };
 
-    useEffect(() => {
+  useEffect(() => {
     fetchFiles();
-    }, []);
-return (
-    <FileContext.Provider 
-        value={{
-            files, 
-            fetchSimilarFiles
-        }}>
-        {children}
+  }, []);
+  return (
+    <FileContext.Provider
+      value={{
+        files,
+        fetchSimilarFiles,
+      }}
+    >
+      {children}
     </FileContext.Provider>
-)
-}
+  );
+};
 
 export const useFile = () => {
-    const context = useContext(FileContext)
-    if(!context){
-        throw new Error("useFile must be within an FileContextProvider"); 
-    }
-    return context
-}
+  const context = useContext(FileContext);
+  if (!context) {
+    throw new Error("useFile must be within an FileContextProvider");
+  }
+  return context;
+};

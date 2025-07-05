@@ -4,6 +4,7 @@ import { Button, Image } from "react-bootstrap";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { useNavigate, useParams } from "react-router-dom";
 import { useFile } from "../utils/FileContext";
+import MasonryLayout from "../components/MasonryLayout";
 
 type UserFileProps = {
   id: number;
@@ -25,13 +26,13 @@ export const DxfPage = () => {
   const [file, setFile] = useState<FileProps | null>(null);
   const apiUrl = import.meta.env.VITE_API_URL;
   const { id } = useParams();
-  const { fetchSimilarFiles } = useFile()
+  const { fetchSimilarFiles, files } = useFile();
   const navigate = useNavigate();
   const [isDownloadingFile, setIsDownloadingFile] = useState(false);
   const [isDownloadingImage, setIsDownloadingImage] = useState(false);
 
-  if (id){
-    fetchSimilarFiles(id)
+  if (id) {
+    fetchSimilarFiles(id);
   }
 
   const fetchFile = async () => {
@@ -140,16 +141,18 @@ export const DxfPage = () => {
                 <p className="card-text">{file.description}</p>
                 <div className="d-flex justify-content-between">
                   <Button variant="dark" onClick={handleDownloadImage}>
-                     {isDownloadingImage ? (
-                       <>
-                       <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                        <span className="sr-only">Loading...</span>
-                       </>
-                     ):(
+                    {isDownloadingImage ? (
                       <>
-                        Download Image file
+                        <span
+                          className="spinner-border spinner-border-sm"
+                          role="status"
+                          aria-hidden="true"
+                        ></span>
+                        <span className="sr-only">Loading...</span>
                       </>
-                     )}
+                    ) : (
+                      <>Download Image file</>
+                    )}
                   </Button>
                   <Button
                     variant="dark"
@@ -157,15 +160,17 @@ export const DxfPage = () => {
                     className="mx-3"
                   >
                     {isDownloadingImage ? (
-                       <>
-                       <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                        <span className="sr-only">Loading...</span>
-                       </>
-                     ):(
                       <>
-                         Download DXF file
+                        <span
+                          className="spinner-border spinner-border-sm"
+                          role="status"
+                          aria-hidden="true"
+                        ></span>
+                        <span className="sr-only">Loading...</span>
                       </>
-                     )}
+                    ) : (
+                      <>Download DXF file</>
+                    )}
                   </Button>
                 </div>
                 <p className="card-text mt-3">
@@ -182,6 +187,8 @@ export const DxfPage = () => {
           <div className="spinner-border" role="status"></div>
         </div>
       )}
+
+      {file && <MasonryLayout files={files} />}
     </>
   );
 };
