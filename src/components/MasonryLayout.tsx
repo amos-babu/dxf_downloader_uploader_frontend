@@ -2,7 +2,7 @@ import { Card } from "react-bootstrap";
 import Masonry from "react-masonry-css";
 import { Link } from "react-router-dom";
 import { IoPersonCircle } from "react-icons/io5";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useWindowWidth from "../hooks/useWidthHook";
 
 type UserProps = {
@@ -24,6 +24,7 @@ type MasonryLayoutProps = {
 
 const MasonryLayout = ({ files }: MasonryLayoutProps) => {
   const [breakpointColNums, setBreakpointColNums] = useState(3);
+  const containerRef = useRef(null);
 
   const width = useWindowWidth();
 
@@ -35,7 +36,7 @@ const MasonryLayout = ({ files }: MasonryLayoutProps) => {
     } else if (width < 1024) {
       setBreakpointColNums(3);
     } else {
-      setBreakpointColNums(4);
+      setBreakpointColNums(3);
     }
   }, [width]);
 
@@ -47,7 +48,7 @@ const MasonryLayout = ({ files }: MasonryLayoutProps) => {
     >
       {files && files.length > 0 ? (
         files.map((file: File) => (
-          <div key={file.id} className="md-4">
+          <div ref={containerRef} key={file.id} className="md-4">
             <div className="card shadow align-items-start border-0">
               <Link to={`/show/${file.id}`} className="text-decoration-none">
                 <Card.Img
