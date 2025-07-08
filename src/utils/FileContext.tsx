@@ -12,7 +12,8 @@ type FileContextProviderProps = {
 };
 
 type FileContextTypeProps = {
-  files: File[] | null;
+  files: File[];
+  similarFiles: File[];
   fetchSimilarFiles: (id: string) => void;
 };
 
@@ -34,7 +35,8 @@ const FileContext = createContext<FileContextTypeProps | undefined>(undefined);
 export const FileContextProvider = ({
   children,
 }: FileContextProviderProps): JSX.Element => {
-  const [files, setFiles] = useState<File[] | null>([]);
+  const [files, setFiles] = useState<File[]>([]);
+  const [similarFiles, setSimilarFiles] = useState<File[]>([]);
   const apiUrl = import.meta.env.VITE_API_URL;
 
   const fetchFiles = async () => {
@@ -49,14 +51,8 @@ export const FileContextProvider = ({
   const fetchSimilarFiles = async (id: string) => {
     if (id) {
       try {
-        const response = await axios.get(
-          `
-              ${apiUrl}similar_files/${id}`
-        );
-
-        // return response.data.data
-        // console.log(response.data.data);
-        setFiles(response.data.data);
+        const response = await axios.get(`${apiUrl}similar_files/${id}`);
+        setSimilarFiles(response.data.data);
       } catch (error) {
         console.error("Error fetching file:", error);
       }
@@ -70,6 +66,7 @@ export const FileContextProvider = ({
     <FileContext.Provider
       value={{
         files,
+        similarFiles,
         fetchSimilarFiles,
       }}
     >

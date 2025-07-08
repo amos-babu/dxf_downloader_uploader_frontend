@@ -26,14 +26,16 @@ export const DxfPage = () => {
   const [file, setFile] = useState<FileProps | null>(null);
   const apiUrl = import.meta.env.VITE_API_URL;
   const { id } = useParams();
-  const { fetchSimilarFiles, files } = useFile();
+  const { fetchSimilarFiles, similarFiles } = useFile();
   const navigate = useNavigate();
   const [isDownloadingFile, setIsDownloadingFile] = useState(false);
   const [isDownloadingImage, setIsDownloadingImage] = useState(false);
 
-  if (id) {
-    fetchSimilarFiles(id);
-  }
+  useEffect(() => {
+    if (id) {
+      fetchSimilarFiles(id);
+    }
+  }, [id]);
 
   const fetchFile = async () => {
     if (id) {
@@ -188,7 +190,9 @@ export const DxfPage = () => {
         </div>
       )}
 
-      {file && <MasonryLayout files={files} />}
+      <h2 className="mt-5 mb-5">Recommended Similar Files</h2>
+
+      {file && <MasonryLayout files={similarFiles} />}
     </>
   );
 };
