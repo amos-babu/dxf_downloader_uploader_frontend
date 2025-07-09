@@ -1,29 +1,28 @@
-import axios from "axios";
-import { createContext, ReactNode, useContext, useState } from "react";
+import { createContext, ReactNode, useContext } from "react";
+import useFetchAllFiles from "../hooks/useFetchAllFiles";
+import useFetchSimilarFiles from "../hooks/useFetchSimilarFiles";
 
 type FileContextProviderProps = {
   children: ReactNode;
 };
 
 type FileContextTypeProps = {
-  files: File[];
-  similarFiles: File[];
+  files: FileProps[];
+  similarFiles: FileProps[];
   fetchSimilarFiles: (id: string) => void;
   fetchFiles: () => void;
   hasMore: boolean;
 };
 
-type UserProps = {
-  id: number;
-  username: string;
-  profile_pic_path: string;
-};
-
-type File = {
+type FileProps = {
   id: number;
   title: string;
   picture_path: string;
-  user: UserProps;
+  user: {
+    id: number;
+    username: string;
+    profile_pic_path: string;
+  };
 };
 
 const FileContext = createContext<FileContextTypeProps | undefined>(undefined);
@@ -31,35 +30,8 @@ const FileContext = createContext<FileContextTypeProps | undefined>(undefined);
 export const FileContextProvider = ({
   children,
 }: FileContextProviderProps): JSX.Element => {
-  const [files, setFiles] = useState<File[]>([]);
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
-  const [similarFiles, setSimilarFiles] = useState<File[]>([]);
-  const apiUrl = import.meta.env.VITE_API_URL;
-
-  const fetchFiles = async () => {
-    try {
-      const response = await axios.get(`${apiUrl}retrieve_files?page=${page}`);
-      setFiles((prev) => [...prev, ...response.data.data]);
-      setHasMore(
-        response.data.meta.current_page < response.data.meta.last_page
-      );
-      setPage((prev) => prev + 1);
-    } catch (error) {
-      console.error("Error fetching files:", error);
-    }
-  };
-
-  const fetchSimilarFiles = async (id: string) => {
-    if (id) {
-      try {
-        const response = await axios.get(`${apiUrl}similar_files/${id}`);
-        setSimilarFiles(response.data.data);
-      } catch (error) {
-        console.error("Error fetching file:", error);
-      }
-    }
-  };
+  const { files, hasMore, fetchFiles } = useFetchAllFiles();
+  const { similarFiles, fetchSimilarFiles } = useFetchSimilarFiles();
 
   return (
     <FileContext.Provider
