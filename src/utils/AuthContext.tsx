@@ -74,7 +74,7 @@ export const AuthProvider = ({ children }: AuthContextProviderProps) => {
         setCanEdit(response.data.can_edit);
         setUserData(response.data.data);
       } catch (error) {
-        console.error(error);
+        // console.error(error);
       }
     };
 

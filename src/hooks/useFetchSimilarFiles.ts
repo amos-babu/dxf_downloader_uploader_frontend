@@ -14,7 +14,7 @@ type FileProps = {
 
 const useFetchSimilarFiles = () => {
   const [similarFiles, setSimilarFiles] = useState<FileProps[]>([]);
-  const apiUrl = import.meta.env.VITE_API_URL;
+  const apiUrl: string = import.meta.env.VITE_API_URL;
 
   const fetchSimilarFiles = async (id: string) => {
     if (id) {

@@ -14,14 +14,14 @@ type FileProps = {
 
 const useFetchAllFiles = () => {
   const [files, setFiles] = useState<FileProps[]>([]);
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
-  const apiUrl = import.meta.env.VITE_API_URL;
+  const [page, setPage] = useState<number>(1);
+  const [hasMore, setHasMore] = useState<boolean>(true);
+  const apiUrl: string = import.meta.env.VITE_API_URL;
 
   const fetchFiles = async () => {
     try {
       const response = await axios.get(`${apiUrl}retrieve_files?page=${page}`);
-      setFiles((prev) => [...prev, ...response.data.data]);
+      setFiles((prev) => [...prev, ...response.data.data.files]);
       setHasMore(
         response.data.meta.current_page < response.data.meta.last_page
       );

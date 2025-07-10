@@ -28,6 +28,11 @@ const MasonryLayout = ({ files }: MasonryLayoutProps) => {
 
   const width = useWindowWidth();
 
+  //Removing Duplicate keys before mapping
+  const uniqueFiles = files.filter(
+    (file, index, self) => index === self.findIndex((f) => f.id === file.id)
+  );
+
   useEffect(() => {
     if (width < 640) {
       setBreakpointColNums(2);
@@ -46,8 +51,9 @@ const MasonryLayout = ({ files }: MasonryLayoutProps) => {
       className="my-masonry-grid"
       columnClassName="my-masonry-grid_column"
     >
-      {files && files.length > 0 ? (
-        files.map((file: File) => (
+      {uniqueFiles &&
+        uniqueFiles.length > 0 &&
+        uniqueFiles.map((file: File) => (
           <div ref={containerRef} key={file.id} className="md-4">
             <div className="card shadow align-items-start border-0">
               <Link to={`/show/${file.id}`} className="text-decoration-none">
@@ -90,12 +96,7 @@ const MasonryLayout = ({ files }: MasonryLayoutProps) => {
               </div>
             </div>
           </div>
-        ))
-      ) : (
-        <div className="d-flex z-1 justify-content-center">
-          <div className="spinner-border" role="status"></div>
-        </div>
-      )}
+        ))}
     </Masonry>
   );
 };
