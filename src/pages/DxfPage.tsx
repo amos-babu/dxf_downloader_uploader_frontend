@@ -5,6 +5,7 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import { useNavigate, useParams } from "react-router-dom";
 import { useFile } from "../utils/FileContext";
 import MasonryLayout from "../components/MasonryLayout";
+import { useInView } from "react-intersection-observer";
 
 type UserFileProps = {
   id: number;
@@ -26,16 +27,25 @@ export const DxfPage = () => {
   const [file, setFile] = useState<FileProps | null>(null);
   const apiUrl = import.meta.env.VITE_API_URL;
   const { id } = useParams();
-  const { fetchSimilarFiles, similarFiles } = useFile();
+  const { fetchSimilarFiles, similarFiles, hasMoreSimilar } = useFile();
   const navigate = useNavigate();
   const [isDownloadingFile, setIsDownloadingFile] = useState(false);
   const [isDownloadingImage, setIsDownloadingImage] = useState(false);
+  const { ref, inView } = useInView();
 
   useEffect(() => {
     if (id) {
       fetchSimilarFiles(id);
     }
   }, [id]);
+
+  useEffect(() => {
+    if (inView) {
+      if (id) {
+        fetchSimilarFiles(id);
+      }
+    }
+  }, [inView]);
 
   const fetchFile = async () => {
     if (id) {
@@ -143,7 +153,7 @@ export const DxfPage = () => {
                 <p className="card-text">{file.description}</p>
                 <div className="d-flex justify-content-between">
                   <Button variant="dark" onClick={handleDownloadImage}>
-                    {isDownloadingImage ? (
+                    {isDownloadingFile ? (
                       <>
                         <span
                           className="spinner-border spinner-border-sm"
@@ -193,6 +203,11 @@ export const DxfPage = () => {
       <h2 className="mt-5 mb-5">Recommended Similar Files</h2>
 
       {file && <MasonryLayout files={similarFiles} />}
+      {hasMoreSimilar && (
+        <div ref={ref} className="text-center mt-4">
+          <span className="spinner-border"></span>
+        </div>
+      )}
     </>
   );
 };

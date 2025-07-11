@@ -12,6 +12,7 @@ type FileContextTypeProps = {
   fetchSimilarFiles: (id: string) => void;
   fetchFiles: () => void;
   hasMore: boolean;
+  hasMoreSimilar: boolean;
 };
 
 type FileProps = {
@@ -31,16 +32,18 @@ export const FileContextProvider = ({
   children,
 }: FileContextProviderProps): JSX.Element => {
   const { files, hasMore, fetchFiles } = useFetchAllFiles();
-  const { similarFiles, fetchSimilarFiles } = useFetchSimilarFiles();
+  const { similarFiles, hasMoreSimilar, fetchSimilarFiles } =
+    useFetchSimilarFiles();
 
   return (
     <FileContext.Provider
       value={{
         files,
+        fetchFiles,
         similarFiles,
         fetchSimilarFiles,
-        fetchFiles,
         hasMore,
+        hasMoreSimilar,
       }}
     >
       {children}

@@ -12,6 +12,7 @@ type FileProps = {
   };
 };
 
+
 const useFetchAllFiles = () => {
   const [files, setFiles] = useState<FileProps[]>([]);
   const [page, setPage] = useState<number>(1);

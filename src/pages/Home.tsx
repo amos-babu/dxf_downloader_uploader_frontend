@@ -16,6 +16,7 @@ export const Home = () => {
       fetchFiles();
     }
   }, [inView]);
+  
 
   return (
     <>
