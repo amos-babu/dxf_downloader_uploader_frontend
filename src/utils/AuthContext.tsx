@@ -74,7 +74,9 @@ export const AuthProvider = ({ children }: AuthContextProviderProps) => {
         setCanEdit(response.data.can_edit);
         setUserData(response.data.data);
       } catch (error) {
-        // console.error(error);
+        // if (error.response?.status == 401) {
+        //   logout();
+        // }
       }
     };
 
@@ -93,7 +95,7 @@ export const AuthProvider = ({ children }: AuthContextProviderProps) => {
     const now = Date.now();
     const expiryTime = parseInt(authTokenExpiry, 10);
 
-    if (now < expiryTime) {
+    if (now > expiryTime) {
       logout();
       return null;
     }
@@ -103,7 +105,12 @@ export const AuthProvider = ({ children }: AuthContextProviderProps) => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     const tokenExpiry = localStorage.getItem("token_expiry_date");
-    checkTokenExpiry(token, tokenExpiry);
+    const validToken = checkTokenExpiry(token, tokenExpiry);
+    if (validToken) {
+      setIsAuthenticated(true);
+      setLoggedIn(true);
+    }
+    setIsInitialized(true);
   }, []);
 
   useEffect(() => {
