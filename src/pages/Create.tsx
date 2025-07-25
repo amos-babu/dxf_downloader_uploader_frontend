@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Button, FloatingLabel, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-type FileUploadProps = "idle" | "uploading" | "success" | "error";
+// type FileUploadProps = "idle" | "uploading" | "success" | "error";
 
 type FormDataProps = {
   title: string;
@@ -35,7 +35,7 @@ export const Create = () => {
   const [authErrorDisplay, setAuthErrorDisplay] = useState<boolean>(false);
   const apiUrl = import.meta.env.VITE_API_URL;
   const token = localStorage.getItem("token");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const data = new FormData();
@@ -60,7 +60,7 @@ export const Create = () => {
       })
       .then((response) => {
         console.log("File Uploaded Successfully", response.data);
-        navigate('/')
+        navigate("/");
         setSuccess(true);
       })
       .catch((error) => {
