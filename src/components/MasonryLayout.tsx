@@ -86,7 +86,7 @@ const MasonryLayout = ({ files }: MasonryLayoutProps) => {
                         size={40}
                       />
                     )}
-                    <div className="mt-1 mx-3 fw-bolder font-monospace text-muted text-wrap fs-6">
+                    <div className="mt-1 mx-3 fw-bolder font-monospace text-wrap fs-6">
                       {file.user.username}
                     </div>
                   </Link>
