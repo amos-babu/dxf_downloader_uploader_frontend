@@ -35,13 +35,13 @@ const MasonryLayout = ({ files }: MasonryLayoutProps) => {
 
   useEffect(() => {
     if (width < 640) {
-      setBreakpointColNums(2);
+      setBreakpointColNums(1);
     } else if (width < 768) {
-      setBreakpointColNums(3);
+      setBreakpointColNums(2);
     } else if (width < 1024) {
       setBreakpointColNums(3);
     } else {
-      setBreakpointColNums(3);
+      setBreakpointColNums(4);
     }
   }, [width]);
 
