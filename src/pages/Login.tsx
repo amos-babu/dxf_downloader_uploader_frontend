@@ -29,7 +29,7 @@ const Login = ({ logoutNotification }: LoginProps) => {
 
   const navigate = useNavigate();
   const submitLoginForm = (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault();-
     axios
       .post(`${apiUrl}login`, formData)
       .then((res) => {
@@ -46,6 +46,7 @@ const Login = ({ logoutNotification }: LoginProps) => {
         if (err.response && err.response.status === 422) {
           setError(err.response.data.errors);
         }
+        console.log(err)
         // console.log(err.response.data.message);
         // message = {
         //   message: "Pasword does not match email",

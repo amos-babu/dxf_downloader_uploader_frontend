@@ -95,7 +95,7 @@ export const AuthProvider = ({ children }: AuthContextProviderProps) => {
     const now = Date.now();
     const expiryTime = parseInt(authTokenExpiry, 10);
 
-    if (now > expiryTime) {
+    if (now < expiryTime) {
       logout();
       return null;
     }
