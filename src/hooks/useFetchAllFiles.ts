@@ -22,7 +22,6 @@ const useFetchAllFiles = () => {
   const fetchFiles = async () => {
     try {
       const response = await axios.get(`${apiUrl}retrieve_files?page=${page}`);
-      console.log(response.data.data)
       setFiles((prev) => [...prev, ...response.data.data.files]);
       setHasMore(
         response.data.meta.current_page < response.data.meta.last_page

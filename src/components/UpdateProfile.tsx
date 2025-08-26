@@ -43,13 +43,9 @@ function UpdateProfile() {
     data.append("username", formData.username);
     data.append("bio", formData.bio);
 
-    if (formData.profile_image) {
+    if (formData.profile_image instanceof File) {
       data.append("profile_pic_path", formData.profile_image);
     }
-
-    // for (let [key, value] of data.entries()) {
-    //   console.log(key, value);
-    // }
 
     axios
       .put(`${apiUrl}update_user`, data, {
@@ -91,7 +87,7 @@ function UpdateProfile() {
               onChange={(e) =>
                 setFormData({ ...formData, name: e.target.value })
               }
-              type="name"
+              type="text"
               autoFocus
             />
           </Form.Group>
@@ -103,7 +99,7 @@ function UpdateProfile() {
               onChange={(e) =>
                 setFormData({ ...formData, username: e.target.value })
               }
-              type="username"
+              type="text"
               autoFocus
             />
           </Form.Group>
