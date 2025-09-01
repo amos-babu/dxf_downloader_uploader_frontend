@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 
-type FileProps = {
+export type FileProps = {
   id: number;
   title: string;
   picture_path: string;
@@ -12,6 +12,18 @@ type FileProps = {
   };
 };
 
+export type DataProps = {
+  data: {
+    per_page: number;
+    current_page: number;
+    total_files: number;
+    last_page: number;
+    files: FileProps[];
+  };
+  links: {
+    next: string | null;
+  };
+};
 
 const useFetchAllFiles = () => {
   const [files, setFiles] = useState<FileProps[]>([]);
