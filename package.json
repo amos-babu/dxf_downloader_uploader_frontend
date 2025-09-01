@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.85.6",
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
     "intersection-observer": "^0.12.2",
