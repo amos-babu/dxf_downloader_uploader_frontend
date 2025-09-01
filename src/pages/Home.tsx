@@ -1,24 +1,12 @@
 import { useEffect } from "react";
 import MasonryLayout from "../components/MasonryLayout";
-import { useFile } from "../utils/FileContext";
 import { useInView } from "react-intersection-observer";
-import { useFetchFiles, useFetchPaginatedFiles } from "../hooks/fetchFile";
+import { useFetchPaginatedFiles } from "../hooks/fetchFile";
 
 export const Home = () => {
-  // const { files, fetchFiles, hasMore } = useFile();
   const { ref, inView } = useInView();
 
-  // useEffect(() => {
-  //   fetchFiles();
-  // }, []);
-
-  // useEffect(() => {
-  //   if (inView) {
-  //     fetchFiles();
-  //   }
-  // }, [inView]);
-
-  const { data: files2, fetchNextPage, hasNextPage } = useFetchPaginatedFiles();
+  const { data: files, fetchNextPage, hasNextPage } = useFetchPaginatedFiles();
 
   useEffect(() => {
     if (inView) {
@@ -26,12 +14,13 @@ export const Home = () => {
     }
   }, [inView]);
 
-  // console.log(status, error, isFetching, isFetchingNextPage);
+  console.log(files);
+
   return (
     <>
       <div className="row">
-        {files2?.pages.flatMap((page) => (
-          <MasonryLayout files={page.data.files} />
+        {files?.pages.flatMap((page, index) => (
+          <MasonryLayout key={index} files={page.data.files} />
         ))}
         {hasNextPage && (
           <div ref={ref} className="text-center mt-4">
